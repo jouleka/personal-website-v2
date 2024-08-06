@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Playfair_Display } from 'next/font/google';
-import LightBulbToggle from '../light-bulb-toggle';
+import WhimsicalCelestialToggle from '../light-dark-mode-switch';
 
 const playfair = Playfair_Display({ subsets: ['latin'] });
 
@@ -13,7 +13,26 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const smoothScroll = (e: Event) => {
+      e.preventDefault();
+      const targetId = (e.currentTarget as HTMLAnchorElement).getAttribute('href');
+      if (targetId) {
+        document.querySelector(targetId)?.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    };
+  
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', smoothScroll);
+    });
+  
+    return () => {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', smoothScroll);
+      });
+    };
   }, []);
 
   return (
@@ -39,20 +58,22 @@ const Header: React.FC = () => {
             </span>
           </motion.div>
           
-          <nav className="hidden md:flex items-center space-x-8">
-            {['About', 'Expertise', 'Portfolio', 'Contact'].map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-sm uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors relative"
-                whileHover={{ y: -2 }}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </nav>
+          <div className="flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8">
+              {['About', 'Expertise', 'Portfolio', 'Contact'].map((item) => (
+                <motion.a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="text-sm uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors relative"
+                  whileHover={{ y: -2 }}
+                >
+                  {item}
+                </motion.a>
+              ))}
+            </nav>
+            <WhimsicalCelestialToggle />
+          </div>
         </div>
-        <LightBulbToggle />
       </div>
       
       {scrolled && (
