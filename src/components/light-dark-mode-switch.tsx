@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 
 const WhimsicalCelestialToggle: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const toggleTheme = () => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+  }, [theme, setTheme]);
+
+  const isDark = useMemo(() => theme === 'dark', [theme]);
+
+  const sunAnimation = useCallback(() => ({
+    opacity: isDark ? 0 : 1,
+    scale: isDark ? 0.5 : 1,
+    x: isDark ? 8 : 0,
+    y: isDark ? 8 : 0,
+  }), [isDark]);
+
+  const moonAnimation = useCallback(() => ({
+    opacity: isDark ? 1 : 0,
+    scale: isDark ? 1 : 0.5,
+    x: isDark ? 0 : -8,
+    y: isDark ? 0 : -8,
+  }), [isDark]);
+
+  const starsAnimation = useCallback(() => ({
+    opacity: isDark ? 1 : 0,
+  }), [isDark]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <motion.div
@@ -21,16 +50,12 @@ const WhimsicalCelestialToggle: React.FC = () => {
         className="w-full h-full"
       >
         {/* Background circle */}
-        <circle cx="16" cy="16" r="16" fill={theme === 'dark' ? '#1a1a2e' : '#87CEEB'} />
+        <circle cx="16" cy="16" r="16" fill={isDark ? '#1a1a2e' : '#87CEEB'} />
 
         {/* Sun */}
         <motion.g
-          animate={{ 
-            opacity: theme === 'dark' ? 0 : 1,
-            scale: theme === 'dark' ? 0.5 : 1,
-            x: theme === 'dark' ? 8 : 0,
-            y: theme === 'dark' ? 8 : 0,
-          }}
+          initial={sunAnimation()}
+          animate={sunAnimation()}
           transition={{ duration: 0.5 }}
         >
           <circle cx="16" cy="16" r="7" fill="#FFD700" />
@@ -55,12 +80,8 @@ const WhimsicalCelestialToggle: React.FC = () => {
 
         {/* Moon */}
         <motion.g
-          animate={{ 
-            opacity: theme === 'dark' ? 1 : 0,
-            scale: theme === 'dark' ? 1 : 0.5,
-            x: theme === 'dark' ? 0 : -8,
-            y: theme === 'dark' ? 0 : -8,
-          }}
+          initial={moonAnimation()}
+          animate={moonAnimation()}
           transition={{ duration: 0.5 }}
         >
           <circle cx="16" cy="16" r="7" fill="white" />
@@ -76,9 +97,8 @@ const WhimsicalCelestialToggle: React.FC = () => {
 
         {/* Stars */}
         <motion.g
-          animate={{ 
-            opacity: theme === 'dark' ? 1 : 0,
-          }}
+          initial={starsAnimation()}
+          animate={starsAnimation()}
           transition={{ duration: 0.5 }}
         >
           {[...Array(5)].map((_, i) => (

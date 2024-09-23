@@ -21,8 +21,8 @@ const Hero: React.FC = () => {
                         <span className="text-primary block">Elegance</span>
                     </h1>
                     <p className="text-xl text-muted-foreground mb-8 font-inter">
-                        Transforming complex challenges into refined, scalable solutions.
-                        With a decade of expertise in software engineering, I bring sophistication to every project.
+                        Architecting elegant, scalable web solutions with over 4 years of expertise.
+                        Specializing in Angular, TypeScript, and cutting-edge JavaScript technologies.
                     </p>
                     <motion.a
                         href="#portfolio"
