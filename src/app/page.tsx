@@ -1,15 +1,12 @@
-"use client";
-
-import { useMemo } from 'react';
-import AboutSection from "@/components/about-section";
-import ContactSection from "@/components/contact-section";
-import ExpertiseAndWorkSection from "@/components/experience-section";
-import Header from "@/components/header";
-import Hero from "@/components/hero";
-import PortfolioSection from "@/components/portfolio-section";
+import AboutSection from '@/components/about-section';
+import ContactSection from '@/components/contact-section';
+import ExpertiseAndWorkSection from '@/components/experience-section';
+import Header from '@/components/header';
+import Hero from '@/components/hero';
+import PortfolioSection from '@/components/portfolio-section';
 
 export default function Home() {
-  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const currentYear = new Date().getFullYear();
 
   return (
     <div className="min-h-screen bg-background text-foreground">

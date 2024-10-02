@@ -18,7 +18,7 @@ import {
   FileText,
   Image as ImageIcon,
   Layout,
-} from 'lucide-react';;
+} from 'lucide-react';
 import Image from 'next/image';
 
 interface Project {
@@ -281,10 +281,11 @@ const PortfolioSection: React.FC = () => {
           <Image
             src={src}
             alt={`${selectedProject?.name} preview`}
+            fill
             className="object-contain rounded"
-            layout="fill" // Makes the image fill the parent container
-            objectFit="contain" // Maintains aspect ratio
-            priority={false} // Set to true if you want to preload the image
+            priority={currentImageIndex === 0}
+            placeholder="blur"
+            blurDataURL="/path/to/low-res-image.jpg"
           />
         </div>
       );

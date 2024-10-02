@@ -1,15 +1,23 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { Metadata } from 'next';
+import { Inter, Playfair_Display } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from "@vercel/analytics/react"
 
-const inter = Inter({ subsets: ["latin"] });
-const playfair = Playfair_Display({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
 
 export const metadata: Metadata = {
-  title: "Your Name - Software Engineer",
-  description: "Portfolio of a skilled software engineer specializing in elegant solutions",
+  title: 'Your Name - Software Engineer',
+  description:
+    'Portfolio of a skilled software engineer specializing in elegant solutions',
 };
 
 export default function RootLayout({
@@ -24,6 +32,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <SpeedInsights/>
+        <Analytics />
       </body>
     </html>
   );
