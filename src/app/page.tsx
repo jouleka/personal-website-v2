@@ -1,9 +1,11 @@
-import AboutSection from '@/components/about-section';
-import ContactSection from '@/components/contact-section';
-import ExpertiseAndWorkSection from '@/components/experience-section';
+import dynamic from 'next/dynamic';
 import Header from '@/components/header';
 import Hero from '@/components/hero';
-import PortfolioSection from '@/components/portfolio-section';
+
+const AboutSection = dynamic(() => import('@/components/about-section'), { ssr: false });
+const ExpertiseAndWorkSection = dynamic(() => import('@/components/experience-section'), { ssr: false });
+const PortfolioSection = dynamic(() => import('@/components/portfolio-section'), { ssr: false });
+const ContactSection = dynamic(() => import('@/components/contact-section'), { ssr: false });
 
 export default function Home() {
   const currentYear = new Date().getFullYear();

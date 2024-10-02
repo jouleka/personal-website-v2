@@ -8,10 +8,12 @@ import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '700'],
+  display: 'swap',
 });
 const playfair = Playfair_Display({
   subsets: ['latin'],
   weight: ['400', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
