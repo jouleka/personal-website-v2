@@ -17,10 +17,17 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Jurgen Leka - Software Engineer',
-  description:
-    'Portfolio of a skilled software engineer specializing in elegant solutions',
-};
+  title: {
+    template: '%s | Jurgen Leka',
+    default: 'Jurgen Leka',
+  },
+  description: 'Personal portfolio of Jurgen Leka',
+  icons: {
+    icon: '/logo.svg',
+    apple: '/logo.svg',
+  },
+  manifest: '/site.webmanifest',
+}
 
 export default function RootLayout({
   children,
