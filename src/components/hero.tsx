@@ -1,38 +1,90 @@
 "use client";
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 import CodeElegance from './code-elegance';
+import { smoothScrollTo } from '@/lib/utils';
 
 const Hero: React.FC = () => {
+    const smoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const targetId = e.currentTarget.getAttribute('href')?.replace('#', '');
+        if (targetId) {
+            smoothScrollTo(targetId);
+        }
+    }, []);
+
     return (
-        <section className="relative min-h-screen flex items-center justify-center bg-background text-foreground py-20 px-4 overflow-hidden">
+        <section id="hero" className="relative min-h-screen flex items-center justify-center bg-background text-foreground py-20 px-4 overflow-hidden">
             <CodeElegance />
             <div className="container mx-auto relative z-10">
                 <motion.div
-                    className="max-w-2xl mx-auto text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    className="max-w-3xl mx-auto"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
                 >
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-6">
-                        Crafting Digital
-                        <span className="text-primary block">Elegance</span>
-                    </h1>
-                    <p className="text-xl text-muted-foreground mb-8 font-inter">
-                        Architecting elegant, scalable web solutions with over 4 years of expertise.
-                        Specializing in Angular, TypeScript, and cutting-edge JavaScript technologies.
-                    </p>
-                    <motion.a
-                        href="#portfolio"
-                        className="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                    <motion.div 
+                        className="mb-8 flex items-center justify-center space-x-2 text-primary/60"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
                     >
-                        View My Work
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                    </motion.a>
+                        <Terminal className="h-4 w-4" />
+                        <span className="text-sm font-mono">while(true) improve()</span>
+                    </motion.div>
+                    
+                    <motion.div
+                        className="text-center space-y-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                    >
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold">
+                            <span className="sr-only">Jurgen Leka</span>
+                            <span className="block" aria-hidden="true">{"{ jurgen: leka }"}</span>
+                        </h1>
+                        
+                        <p className="text-lg text-muted-foreground/80 font-light max-w-md mx-auto">
+                            Writing code that makes other developers question their implementations.
+                        </p>
+                    </motion.div>
+
+                    <motion.div 
+                        className="mt-16 grid grid-cols-3 gap-4 text-center text-sm font-mono text-muted-foreground/60"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.6 }}
+                    >
+                        <div className="space-y-1">
+                            <p>type</p>
+                            <p className="text-primary">architect</p>
+                        </div>
+                        <div className="space-y-1">
+                            <p>status</p>
+                            <p className="text-primary">available</p>
+                        </div>
+                        <div className="space-y-1">
+                            <p>location</p>
+                            <p className="text-primary">Europe</p>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        className="mt-12 text-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                    >
+                        <a
+                            href="#portfolio"
+                            onClick={smoothScroll}
+                            className="inline-flex items-center text-sm font-mono hover:text-primary transition-colors duration-300"
+                        >
+                            <span className="border-b border-primary/20 hover:border-primary">cd /portfolio</span>
+                        </a>
+                    </motion.div>
                 </motion.div>
             </div>
         </section>

@@ -2,59 +2,30 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-
-const FadeInText: React.FC<{ text: string; delay: number }> = ({ text, delay }) => {
-  const controls = useAnimation();
-  const textRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const textElement = textRef.current;
-  
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
-          controls.start({ opacity: 1, y: 0 });
-        }
-      },
-      { threshold: 0.1 }
-    );
-  
-    if (textElement) {
-      observer.observe(textElement);
-    }
-  
-    return () => {
-      if (textElement) {
-        observer.unobserve(textElement);
-      }
-    };
-  }, [controls, isVisible]);
-
-  return (
-    <motion.p
-      ref={textRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={controls}
-      transition={{ duration: 1, delay: delay, ease: "easeOut" }}
-      className="mb-4 text-muted-foreground"
-    >
-      {text}
-    </motion.p>
-  );
-};
 
 const AboutSection: React.FC = () => {
   const sectionRef = useRef(null);
   const controls = useAnimation();
+  const [typeIndex, setTypeIndex] = useState(0);
+  const roles = [
+    "Software Architect",
+    "System Designer",
+    "Code Craftsman",
+    "> sudo make impact"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTypeIndex((prev) => (prev + 1) % roles.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          controls.start({ opacity: 1, y: 0 });
+          controls.start("visible");
         }
       },
       { threshold: 0.1 }
@@ -72,65 +43,150 @@ const AboutSection: React.FC = () => {
   }, [controls]);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-background text-foreground overflow-hidden">
+    <section id="about" ref={sectionRef} className="py-32 bg-background text-foreground overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
-          className="max-w-4xl mx-auto bg-card p-8 border border-primary/20 rounded-sm shadow-lg"
-          initial={{ opacity: 0, y: 50 }}
+          className="max-w-5xl mx-auto relative"
+          initial="hidden"
           animate={controls}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
+          }}
         >
-          <div className="text-center mb-8">
-            <h1 className="text-5xl font-playfair font-bold mb-2 text-foreground">Jurgen Leka</h1>
-            <p className="text-sm uppercase tracking-widest text-muted-foreground">Full Stack JavaScript Developer</p>
-          </div>
-
-          <div className="border-t border-b border-primary/20 py-4 my-6">
-            <h2 className="text-3xl font-playfair font-bold text-center text-foreground">Crafting Digital Elegance</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <FadeInText
-                text="Results-driven Full Stack JavaScript Developer with 4+ years of expertise in architecting and implementing scalable web applications. Specializes in Angular, TypeScript, and RxJS, with a proven track record of spearheading the development of enterprise-grade applications."
-                delay={0.2}
-              />
-              <FadeInText
-                text="Successfully refactored legacy systems, reducing technical debt by 40% and enhancing maintainability. Mentored junior developers, leading to a 25% increase in team productivity and code quality."
-                delay={0.4}
-              />
-            </div>
-            <div>
-              <FadeInText
-                text="Implemented cutting-edge technologies to solve complex problems, driving innovation in e-learning and product data management platforms. Expertise spans from frontend frameworks like Angular and React to backend technologies including Node.js and Java Spring Boot."
-                delay={0.6}
-              />
-              <motion.blockquote
-                className="text-xl italic border-l-4 border-primary/40 pl-4 py-2 my-4 text-foreground"
-                initial={{ opacity: 0, x: -20 }}
-                animate={controls}
-                transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-              >
-                &ldquo;In the realm of code, elegance is not a luxury, but a necessity.&rdquo;
-              </motion.blockquote>
-              <FadeInText
-                text="Committed to delivering high-quality, performant, and maintainable code. Continuously learning and adapting to new technologies to stay at the forefront of web development."
-                delay={1}
-              />
+          {/* Matrix-like Background */}
+          <div className="absolute inset-0 overflow-hidden opacity-[0.03] select-none pointer-events-none">
+            <div className="font-mono text-xs leading-none whitespace-pre text-primary">
+              {Array(50).fill('01').join(' ')}
             </div>
           </div>
 
-          <div className="text-center mt-8">
-            <motion.a
-              href="#expertise"
-              className="inline-flex items-center px-8 py-3 bg-primary/10 text-primary font-semibold border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          {/* Main Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
+            {/* Left Column */}
+            <motion.div
+              className="space-y-8"
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0 }
+              }}
             >
-              Explore My Journey
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </motion.a>
+              <div className="space-y-4">
+                <motion.p 
+                  className="font-mono text-sm text-primary/60"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { opacity: 1 }
+                  }}
+                >
+                  {roles[typeIndex]}<span className="animate-pulse">_</span>
+                </motion.p>
+                <motion.p 
+                  className="text-5xl md:text-6xl font-playfair"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  Crafting
+                </motion.p>
+                <motion.p 
+                  className="text-6xl md:text-7xl font-playfair text-primary"
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0 }
+                  }}
+                >
+                  Excellence
+                </motion.p>
+              </div>
+
+              <motion.div 
+                className="h-px w-24 bg-primary/20"
+                variants={{
+                  hidden: { width: 0 },
+                  visible: { width: 96 }
+                }}
+                transition={{ duration: 1 }}
+              />
+
+              <motion.div 
+                className="font-mono text-sm space-y-2"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1 }
+                }}
+              >
+                <p className="text-primary/60">const approach = {`{`}</p>
+                <p className="pl-4">vision: <span className="text-primary">&quot;architectural thinking&quot;</span>,</p>
+                <p className="pl-4">execution: <span className="text-primary">&quot;pixel-perfect precision&quot;</span>,</p>
+                <p className="pl-4">standard: <span className="text-primary">&quot;excellence || nothing&quot;</span></p>
+                <p className="text-primary/60">{`}`};</p>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Column */}
+            <motion.div
+              className="space-y-12"
+              variants={{
+                hidden: { opacity: 0, x: 20 },
+                visible: { opacity: 1, x: 0 }
+              }}
+            >
+              <div className="relative">
+                <div className="space-y-8">
+                  <div className="relative pl-8 border-l-2 border-primary/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono text-xs text-primary/60">01</span>
+                      <p className="text-2xl font-light">Transforming complexity into clarity</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;refactor: enhanced system architecture&quot;</p>
+                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
+                  </div>
+                  <div className="relative pl-8 border-l-2 border-primary/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono text-xs text-primary/60">02</span>
+                      <p className="text-2xl font-light">Building systems that define standards</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;feat: implemented next-gen architecture&quot;</p>
+                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
+                  </div>
+                  <div className="relative pl-8 border-l-2 border-primary/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono text-xs text-primary/60">03</span>
+                      <p className="text-2xl font-light">Creating experiences that leave marks</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;perf: optimized user experience&quot;</p>
+                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
+
+          {/* Bottom Section */}
+          <motion.div
+            className="mt-24 relative border-t border-primary/10 pt-16 font-mono"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+          >
+            <div className="grid grid-cols-3 gap-8">
+              <div className="text-center">
+                <p className="text-5xl font-playfair text-primary mb-2">4+</p>
+                <p className="text-xs tracking-widest text-muted-foreground/60">UPTIME_YEARS</p>
+              </div>
+              <div className="text-center">
+                <p className="text-5xl font-playfair text-primary mb-2">01</p>
+                <p className="text-xs tracking-widest text-muted-foreground/60">CORE_VISION</p>
+              </div>
+              <div className="text-center">
+                <p className="text-5xl font-playfair text-primary mb-2">∞</p>
+                <p className="text-xs tracking-widest text-muted-foreground/60">MAX_POTENTIAL</p>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

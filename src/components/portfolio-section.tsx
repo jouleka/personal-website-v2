@@ -18,6 +18,10 @@ import {
   FileText,
   Image as ImageIcon,
   Layout,
+  Lightbulb,
+  Share2,
+  UserPlus,
+  Globe,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -30,6 +34,13 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    name: 'Great Wall of Ideas',
+    description: 'A community-driven platform for sharing and discovering innovative ideas. A space where shower thoughts transform into potential projects, connecting visionaries with builders.',
+    tools: 'Next.js/TailwindCSS/Supabase',
+    url: 'https://www.greatwallofideas.xyz/',
+    images: ['great-wall-ideas-placeholder'],
+  },
   {
     name: 'CV Template',
     description: 'Customizable resume builder with modern design and export capabilities.',
@@ -56,10 +67,24 @@ const projects: Project[] = [
 const PortfolioSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [debugMode, setDebugMode] = useState(false);
   const sectionRef = useRef(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
+  // Debug mode toggle
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === '`') {
+        setDebugMode(prev => !prev);
+        console.log(`%c[DEBUG] Mode ${!debugMode ? 'enabled' : 'disabled'}`, 'color: #00ff9d');
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [debugMode]);
+
+  // Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -70,19 +95,18 @@ const PortfolioSection: React.FC = () => {
       { threshold: 0.1 }
     );
 
-    const currentRef = sectionRef.current;
-
-    if (currentRef) {
-      observer.observe(currentRef);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
       }
     };
   }, [controls]);
 
+  // Modal click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -95,38 +119,6 @@ const PortfolioSection: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const modalVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { type: 'spring', stiffness: 300, damping: 30 },
-    },
-    exit: { opacity: 0, scale: 0.8 },
-  };
 
   const nextImage = () => {
     if (selectedProject) {
@@ -141,7 +133,56 @@ const PortfolioSection: React.FC = () => {
   };
 
   const renderPreview = (src: string) => {
-    if (src === 'cv-template-placeholder') {
+    if (src === 'great-wall-ideas-placeholder') {
+      return (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/30 rounded">
+          <div className="text-center p-4">
+            <h3 className="text-2xl font-bold mb-4 font-playfair">Great Wall of Ideas</h3>
+            <p className="text-muted-foreground mb-6 font-serif">Where innovative ideas find their builders</p>
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-2">
+                  <Lightbulb className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <span className="text-sm">Idea Sharing</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-2">
+                  <Share2 className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <span className="text-sm">Community Driven</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-2">
+                  <UserPlus className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <span className="text-sm">Builder Connect</span>
+              </div>
+            </div>
+            <div className="w-full bg-card rounded-lg shadow-inner p-4 overflow-hidden">
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3 animate-slide">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Lightbulb className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="w-3/4 h-4 bg-muted rounded animate-pulse mb-2"></div>
+                    <div className="w-full h-16 bg-muted/50 rounded p-3">
+                      <div className="w-5/6 h-3 bg-muted rounded animate-pulse mb-2"></div>
+                      <div className="w-4/6 h-3 bg-muted rounded animate-pulse"></div>
+                    </div>
+                    <div className="flex gap-2 mt-2">
+                      <div className="px-2 py-1 bg-primary/10 rounded text-xs">Innovation</div>
+                      <div className="px-2 py-1 bg-primary/10 rounded text-xs">Community</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (src === 'cv-template-placeholder') {
       return (
         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/30 rounded">
           <div className="text-center p-4">
@@ -294,47 +335,134 @@ const PortfolioSection: React.FC = () => {
 
   return (
     <section id="portfolio" ref={sectionRef} className="py-24 bg-background text-foreground overflow-hidden">
+      {/* Debug Overlay */}
+      {debugMode && (
+        <div className="fixed top-4 right-4 bg-black/90 p-4 rounded font-mono text-xs text-primary/60 border border-primary/20 z-50">
+          <div className="space-y-1">
+            <p>Projects: {projects.length}</p>
+            <p>Selected: {selectedProject?.name || 'none'}</p>
+            <p>Debug: enabled</p>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4">
-        <motion.div className="max-w-6xl mx-auto" initial="hidden" animate={controls} variants={containerVariants}>
-          <h2 className="text-4xl font-playfair font-bold text-center mb-12">Curated Works</h2>
+        <motion.div 
+          className="max-w-6xl mx-auto"
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+          }}
+        >
+          {/* Header */}
+          <motion.div 
+            className="text-center mb-16"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+          >
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 bg-primary/5 rounded-full">
+              <FileText className="w-4 h-4 text-primary" />
+              <span className="text-sm font-mono text-primary/80">portfolio.show()</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-playfair font-bold">
+              Curated Works
+            </h2>
+          </motion.div>
+
+          {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div
                 key={project.name}
-                className="bg-card border border-primary/20 p-6 rounded-sm shadow-lg flex flex-col justify-between transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                variants={itemVariants}
+                className="group relative bg-black/20 border border-primary/10 p-6 rounded-sm overflow-hidden h-[400px] flex flex-col"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { duration: 0.3, ease: "easeOut" }
+                }}
               >
-                <div>
-                  <h3 className="text-2xl font-playfair font-bold mb-4">{project.name}</h3>
-                  <p className="text-muted-foreground mb-4 font-serif italic">{project.description}</p>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-medium px-3 py-1 bg-primary/10 text-primary rounded-full">
+                {/* Hover Gradient Effect */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0"
+                  initial={{ x: '-100%', opacity: 0 }}
+                  whileHover={{ 
+                    x: '100%', 
+                    opacity: 1,
+                    transition: { 
+                      duration: 1.5, 
+                      ease: "easeInOut",
+                      repeat: Infinity
+                    }
+                  }}
+                />
+
+                {/* Content Container */}
+                <div className="relative flex flex-col flex-1">
+                  {/* Title with underline effect */}
+                  <div className="relative inline-block mb-4">
+                    <h3 className="text-2xl font-playfair font-bold">{project.name}</h3>
+                    <motion.div 
+                      className="absolute -bottom-1 left-0 h-px bg-primary origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+
+                  <p className="text-muted-foreground font-serif italic relative z-10 line-clamp-4 mb-4">
+                    {project.description}
+                  </p>
+
+                  {/* Tools and Actions - Now pushed to bottom */}
+                  <div className="mt-auto space-y-4">
+                    <span className="inline-block text-sm font-medium px-3 py-1 bg-primary/10 text-primary rounded-full transition-colors group-hover:bg-primary/20">
                       {project.tools}
                     </span>
-                    <div className="flex space-x-4">
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:text-primary/80 transition-colors"
-                      >
-                        <Github className="w-5 h-5" />
-                      </a>
-                      <button
-                        onClick={() => {
-                          setSelectedProject(project);
-                          setCurrentImageIndex(0);
-                        }}
-                        className="text-primary hover:text-primary/80 transition-colors"
-                      >
-                        <Search className="w-5 h-5" />
-                      </button>
+                    
+                    <div className="flex justify-between items-center">
+                      <div className="text-xs text-muted-foreground font-mono">
+                        Project {String(index + 1).padStart(2, '0')}
+                      </div>
+                      
+                      <div className="flex items-center gap-3">
+                        <motion.a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 hover:text-primary transition-all"
+                          whileHover={{ 
+                            scale: 1.1,
+                            transition: { type: "spring", stiffness: 400, damping: 10 }
+                          }}
+                        >
+                          {project.name === 'Great Wall of Ideas' ? (
+                            <Globe className="w-5 h-5" />
+                          ) : (
+                            <Github className="w-5 h-5" />
+                          )}
+                        </motion.a>
+                        <motion.button
+                          onClick={() => {
+                            setSelectedProject(project);
+                            setCurrentImageIndex(0);
+                          }}
+                          className="p-2 hover:text-primary transition-all"
+                          whileHover={{ 
+                            scale: 1.1,
+                            transition: { type: "spring", stiffness: 400, damping: 10 }
+                          }}
+                        >
+                          <Search className="w-5 h-5" />
+                        </motion.button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground text-right font-serif">
-                    Project No. {index + 1}
                   </div>
                 </div>
               </motion.div>
@@ -343,6 +471,7 @@ const PortfolioSection: React.FC = () => {
         </motion.div>
       </div>
 
+      {/* Project Modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -353,11 +482,14 @@ const PortfolioSection: React.FC = () => {
           >
             <motion.div
               ref={modalRef}
-              className="bg-card rounded-lg shadow-xl max-w-4xl w-full mx-auto overflow-hidden"
-              variants={modalVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              className="bg-card rounded-sm shadow-xl max-w-4xl w-full mx-auto overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: { type: 'spring', stiffness: 300, damping: 30 }
+              }}
+              exit={{ opacity: 0, scale: 0.9 }}
             >
               <div className="relative h-[400px] md:h-[500px] overflow-hidden">
                 {renderPreview(selectedProject.images[currentImageIndex])}
@@ -365,31 +497,35 @@ const PortfolioSection: React.FC = () => {
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-primary/80 text-primary-foreground p-2 rounded-full transition-colors hover:bg-primary"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70 transition-colors"
                     >
                       <ChevronLeft className="w-6 h-6" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary/80 text-primary-foreground p-2 rounded-full transition-colors hover:bg-primary"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70 transition-colors"
                     >
                       <ChevronRight className="w-6 h-6" />
                     </button>
                   </>
                 )}
               </div>
+
               <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-2xl font-bold font-playfair">{selectedProject.name}</h3>
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold font-playfair mb-2">{selectedProject.name}</h3>
+                    <p className="text-muted-foreground">{selectedProject.description}</p>
+                  </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-primary/60 hover:text-primary transition-colors"
                   >
                     <X className="w-6 h-6" />
                   </button>
                 </div>
-                <p className="text-muted-foreground mb-4 font-serif">{selectedProject.description}</p>
-                <div className="flex justify-between items-center">
+
+                <div className="flex justify-between items-center pt-4 border-t border-primary/10">
                   <span className="text-sm font-medium px-3 py-1 bg-primary/10 text-primary rounded-full">
                     {selectedProject.tools}
                   </span>
@@ -397,10 +533,12 @@ const PortfolioSection: React.FC = () => {
                     href={selectedProject.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-primary hover:text-primary/80 transition-colors"
+                    className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
                   >
-                    <ExternalLink className="w-5 h-5 mr-2" />
-                    View Project
+                    <span className="text-sm font-mono">
+                      {selectedProject.name === 'Great Wall of Ideas' ? 'Visit Website' : 'View Repository'}
+                    </span>
+                    <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>
               </div>
