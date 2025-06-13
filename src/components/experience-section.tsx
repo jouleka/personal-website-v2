@@ -19,16 +19,16 @@ interface Expertise {
 
 const workExperiences: Experience[] = [
   {
-    company: "Gutenberg Technology",
-    position: "Full Stack JavaScript Developer",
-    period: "07/03/2022 – Present",
-    description: "Led refactoring, developed key features for e-learning platform, implemented testing strategies."
+    company: "myCicero",
+    position: "Frontend Developer",
+    period: "07/01/2024 – Present",
+    description: "Architected a multi-tenant monorepo platform enabling seamless brand-specific customisation via a content-driven UI"
   },
   {
-    company: "Helius Systems",
-    position: "Lead Frontend Developer",
-    period: "15/09/2021 – Present",
-    description: "Designed internal company app, developed reusable component library, optimized front-end performance."
+    company: "Gutenberg Technology",
+    position: "Full Stack JavaScript Developer",
+    period: "07/03/2022 – 07/05/2025",
+    description: "Led refactoring, developed key features for e-learning platform, implemented testing strategies."
   },
   {
     company: "Keendoo",
@@ -47,22 +47,22 @@ const workExperiences: Experience[] = [
 const expertiseAreas: Expertise[] = [
   {
     category: "Front-End",
-    skills: ["Angular (2+)", "React", "TypeScript", "JavaScript", "RxJS", "NgRx", "HTML5", "CSS3/SCSS", "MD3", "Tailwind CSS"],
+    skills: ["Angular (2+)", "React", "TypeScript", "JavaScript", "RxJS", "NgRx", "HTML5", "CSS3/SCSS", "MD3", "Tailwind CSS", "UIKit"],
     icon: Code
   },
   {
     category: "Back-End",
-    skills: ["Node.js", "Java (Spring Boot)", "RESTful APIs", "GraphQL"],
+    skills: ["Node.js", "Java (Spring Boot)", "RESTful APIs", "GraphQL", "Hapi.js", "Nextjs"],
     icon: Server
   },
   {
     category: "Database & DevOps",
-    skills: ["MongoDB", "PostgreSQL", "RethinkDB", "Docker", "CI/CD", "Git"],
+    skills: ["MongoDB", "PostgreSQL", "RethinkDB", "Docker", "CI/CD", "Git", "Webpack"],
     icon: Database
   },
   {
     category: "Other",
-    skills: ["Agile/Scrum", "Test-Driven Development (TDD)", "Microservices Architecture"],
+    skills: ["Agile/Scrum", "Test-Driven Development (TDD)", "Microservices Architecture", "Monorepo", "Multi-tenant architecture"],
     icon: Globe
   }
 ];
