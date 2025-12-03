@@ -1,23 +1,18 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+export const runtime = 'edge';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { name, email, message } = await req.json();
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT || '587'),
-    secure: process.env.EMAIL_SECURE === 'true',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
   try {
-    await transporter.sendMail({
-      from: `"${name}" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO,
+    await resend.emails.send({
+      from: `${name} <${process.env.RESEND_FROM_EMAIL}>`,
+      to: process.env.EMAIL_TO!,
+      replyTo: email,
       subject: `New message from ${name}`,
       text: `From: ${name} <${email}>\n\n${message}`,
       html: `<p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
