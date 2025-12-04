@@ -2,10 +2,9 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTheme } from 'next-themes';
-import { motion } from 'framer-motion';
 
 const ThemeToggle: React.FC = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -16,32 +15,20 @@ const ThemeToggle: React.FC = () => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   }, [resolvedTheme, setTheme]);
 
-  if (!mounted) {
-    return (
-      <div className="w-10 h-10 border border-border rounded-sm" />
-    );
-  }
-
-  const isDark = resolvedTheme === 'dark';
+  const isDark = mounted && resolvedTheme === 'dark';
 
   return (
-    <motion.button
+    <button
       onClick={toggleTheme}
-      className="relative w-10 h-10 border border-border hover:border-foreground/40 transition-colors flex items-center justify-center group"
-      whileTap={{ scale: 0.95 }}
+      className="relative w-10 h-10 border border-border hover:border-foreground/40 transition-colors flex items-center justify-center group active:scale-95"
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
       {/* Sun icon */}
-      <motion.svg
+      <svg
         viewBox="0 0 24 24"
-        className="w-5 h-5 absolute"
-        initial={false}
-        animate={{
-          opacity: isDark ? 0 : 1,
-          scale: isDark ? 0.5 : 1,
-          rotate: isDark ? -90 : 0,
-        }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`w-5 h-5 absolute transition-all duration-300 ${
+          isDark ? 'opacity-0 scale-50 -rotate-90' : 'opacity-100 scale-100 rotate-0'
+        }`}
       >
         <circle 
           cx="12" 
@@ -61,19 +48,14 @@ const ThemeToggle: React.FC = () => {
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
         </g>
-      </motion.svg>
+      </svg>
 
       {/* Moon icon */}
-      <motion.svg
+      <svg
         viewBox="0 0 24 24"
-        className="w-5 h-5 absolute"
-        initial={false}
-        animate={{
-          opacity: isDark ? 1 : 0,
-          scale: isDark ? 1 : 0.5,
-          rotate: isDark ? 0 : 90,
-        }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`w-5 h-5 absolute transition-all duration-300 ${
+          isDark ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 rotate-90'
+        }`}
       >
         <path
           d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
@@ -82,17 +64,8 @@ const ThemeToggle: React.FC = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-      </motion.svg>
-
-      {/* Hover accent line */}
-      <motion.span 
-        className="absolute bottom-0 left-0 h-[2px] bg-primary"
-        initial={{ scaleX: 0 }}
-        whileHover={{ scaleX: 1 }}
-        transition={{ duration: 0.2 }}
-        style={{ width: '100%', originX: 0 }}
-      />
-    </motion.button>
+      </svg>
+    </button>
   );
 };
 

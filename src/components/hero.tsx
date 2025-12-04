@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { smoothScrollTo } from '@/lib/utils';
 
@@ -20,72 +19,56 @@ const Hero: React.FC = () => {
       id="hero" 
       className="relative min-h-screen flex items-center bg-background text-foreground overflow-hidden noise-overlay"
     >
-      {/* Large background text */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.5 }}
+      {/* Large background text - CSS animation */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden animate-fade-in-slow"
       >
         <span className="text-[20vw] font-bold text-foreground/[0.02] dark:text-foreground/[0.03] tracking-tighter whitespace-nowrap">
           DEVELOPER
         </span>
-      </motion.div>
+      </div>
 
-      {/* Geometric accent shapes */}
-      <motion.div 
-        className="absolute top-1/4 right-[10%] w-32 h-32 md:w-64 md:h-64 border border-primary/20 rotate-45"
-        initial={{ opacity: 0, scale: 0.8, rotate: 30 }}
-        animate={{ opacity: 1, scale: 1, rotate: 45 }}
-        transition={{ duration: 1, delay: 0.8 }}
+      {/* Geometric accent shapes - CSS animations */}
+      <div 
+        className="absolute top-1/4 right-[10%] w-32 h-32 md:w-64 md:h-64 border border-primary/20 rotate-45 animate-fade-scale-in"
+        style={{ animationDelay: '0.3s' }}
       />
-      <motion.div 
-        className="absolute bottom-1/4 left-[5%] w-16 h-16 md:w-24 md:h-24 bg-primary/10 rotate-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+      <div 
+        className="absolute bottom-1/4 left-[5%] w-16 h-16 md:w-24 md:h-24 bg-primary/10 rotate-12 animate-fade-up"
+        style={{ animationDelay: '0.5s' }}
       />
       
       {/* Main content - Asymmetric layout */}
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-4 items-center min-h-screen py-32">
           
-          {/* Left column - Main text */}
+          {/* Left column - Main text - LCP CRITICAL: No opacity:0, immediate render */}
           <div className="lg:col-span-7 lg:col-start-1">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            <div className="animate-fade-up" style={{ animationDelay: '0.05s' }}>
               <span className="inline-block text-sm font-mono text-primary mb-6 tracking-wider">
                 FULL STACK JAVASCRIPT DEVELOPER
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1 
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tighter mb-8"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+            {/* LCP Element - Renders immediately, no delay */}
+            <h1 
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tighter mb-8 animate-fade-up"
+              style={{ animationDelay: '0.1s' }}
             >
               <span className="block">Jurgen</span>
               <span className="block text-primary">Leka</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p 
-              className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-12"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+            <p 
+              className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-12 animate-fade-up"
+              style={{ animationDelay: '0.15s' }}
             >
               I build web apps with Angular &amp; TypeScript. Currently making multi-tenant platforms less painful.
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+            <div
+              className="flex flex-wrap gap-4 animate-fade-up"
+              style={{ animationDelay: '0.2s' }}
             >
               <a
                 href="#portfolio"
@@ -102,15 +85,13 @@ const Hero: React.FC = () => {
               >
                 Say Hello
               </a>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right column - Stats/Info card */}
-          <motion.div 
-            className="lg:col-span-4 lg:col-start-9"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+          <div 
+            className="lg:col-span-4 lg:col-start-9 animate-fade-in-right"
+            style={{ animationDelay: '0.25s' }}
           >
             <div className="bg-card border border-border p-8 relative">
               {/* Corner accent */}
@@ -150,16 +131,14 @@ const Hero: React.FC = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.2 }}
+      <div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-up"
+        style={{ animationDelay: '0.6s' }}
       >
         <button
           onClick={(e) => smoothScroll(e)}
@@ -167,14 +146,11 @@ const Hero: React.FC = () => {
           className="flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
         >
           <span className="text-xs font-mono tracking-wider">SCROLL</span>
-          <motion.div
-            animate={{ y: [0, 4, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          >
+          <div className="animate-bounce-subtle">
             <ArrowDown className="w-4 h-4" />
-          </motion.div>
+          </div>
         </button>
-      </motion.div>
+      </div>
     </section>
   );
 };

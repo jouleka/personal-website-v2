@@ -1,9 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  
+
   async headers() {
     return [
+      // HTML pages - short cache, revalidate
       {
-        source: '/(.*)',
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      // Static assets - long cache
+      {
+        source: '/:path*.(js|css|jpg|jpeg|png|gif|ico|svg|woff|woff2)',
         headers: [
           {
             key: 'Cache-Control',
@@ -11,8 +28,9 @@ const nextConfig = {
           },
         ],
       },
+      // Next.js static chunks
       {
-        source: '/(.*).(js|css|jpg|jpeg|png|gif|ico|svg)',
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -20,8 +38,9 @@ const nextConfig = {
           },
         ],
       },
+      // Next.js image optimization
       {
-        source: '/_next/image(.*)',
+        source: '/_next/image/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -29,8 +48,9 @@ const nextConfig = {
           },
         ],
       },
+      // API routes - no cache
       {
-        source: '/api/(.*)',
+        source: '/api/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -40,12 +60,13 @@ const nextConfig = {
       },
     ];
   },
+
   images: {
-    domains: ['your-domain.com'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    minimumCacheTTL: 31536000,
   },
-  swcMinify: true,
 };
 
 export default nextConfig;

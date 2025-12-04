@@ -4,10 +4,22 @@ import React, { useCallback } from 'react';
 import { Github, Instagram, Linkedin, Twitter, ArrowUp } from 'lucide-react';
 import { smoothScrollTo } from '@/lib/utils';
 
-export default function Footer() {
-  const currentYear = new Date().getFullYear();
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#expertise', label: 'Expertise' },
+  { href: '#portfolio', label: 'Portfolio' },
+  { href: '#contact', label: 'Contact' },
+];
 
-  const smoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+const socials = [
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/jurgen-leka-31470119a/', label: 'LinkedIn' },
+  { icon: Twitter, href: 'https://x.com/jou_leka', label: 'Twitter' },
+  { icon: Instagram, href: 'https://www.instagram.com/jou_leka/', label: 'Instagram' },
+  { icon: Github, href: 'https://github.com/jouleka', label: 'GitHub' }
+];
+
+export default function Footer() {
+  const smoothScroll = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute('href');
     if (href?.startsWith('#')) {
       e.preventDefault();
@@ -16,23 +28,9 @@ export default function Footer() {
     }
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#expertise', label: 'Expertise' },
-    { href: '#portfolio', label: 'Portfolio' },
-    { href: '#contact', label: 'Contact' },
-  ];
-
-  const socials = [
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/jurgen-leka-31470119a/', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://x.com/jou_leka', label: 'Twitter' },
-    { icon: Instagram, href: 'https://www.instagram.com/jou_leka/', label: 'Instagram' },
-    { icon: Github, href: 'https://github.com/jouleka', label: 'GitHub' }
-  ];
+  }, []);
 
   return (
     <footer className="border-t border-border bg-background">
@@ -112,7 +110,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Jurgen Leka. All rights reserved.
+            © {new Date().getFullYear()} Jurgen Leka. All rights reserved.
           </p>
           
           <button

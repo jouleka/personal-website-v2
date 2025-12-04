@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import WhimsicalCelestialToggle from './light-dark-mode-switch';
 import { smoothScrollTo } from '@/lib/utils';
 
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     setMounted(true);
     scrollListenerRef.current = handleScroll;
-    window.addEventListener('scroll', scrollListenerRef.current);
+    window.addEventListener('scroll', scrollListenerRef.current, { passive: true });
 
     return () => {
       if (scrollListenerRef.current) {
@@ -60,27 +60,22 @@ const Header: React.FC = () => {
     };
   }, [handleScroll]);
 
-  if (!mounted) return null;
-
+  // SSR-safe render - show static header immediately, enhance with JS
   return (
     <>
-      <motion.header 
-        className={`fixed w-full z-50 transition-all duration-700 ${
+      <header 
+        className={`fixed w-full z-50 transition-all duration-700 animate-fade-down ${
           scrolled 
             ? 'bg-background/95 backdrop-blur-sm py-3' 
             : 'bg-transparent py-6'
         }`}
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.2 }}
       >
         <div className="container mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-center">
             {/* Logo - Bold, editorial style */}
-            <motion.a 
+            <a 
               href="#"
               className="group relative"
-              whileHover="hover"
               onClick={(e) => {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,31 +85,22 @@ const Header: React.FC = () => {
                 <span className="text-primary">J</span>
                 <span className="text-foreground">LEKA</span>
               </span>
-              <motion.span 
-                className="absolute -bottom-1 left-0 h-[2px] bg-primary origin-left"
-                initial={{ scaleX: 0 }}
-                variants={{ hover: { scaleX: 1 } }}
-                transition={{ duration: 0.3 }}
-                style={{ width: '100%' }}
-              />
-            </motion.a>
+            </a>
             
             <div className="flex items-center gap-8">
               {/* Desktop Navigation - Numbered items */}
               <nav className="hidden md:flex items-center gap-1">
                 {navItems.map((item, index) => {
-                  const isActive = activeSection === item.href;
+                  const isActive = mounted && activeSection === item.href;
                   return (
-                    <motion.a
+                    <a
                       key={item.href}
                       href={`#${item.href}`}
-                      className={`relative px-4 py-2 text-sm transition-colors group ${
+                      className={`relative px-4 py-2 text-sm transition-colors group animate-fade-down ${
                         isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                       }`}
+                      style={{ animationDelay: `${0.1 + index * 0.05}s` }}
                       onClick={(e) => smoothScroll(e, item.href)}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
                     >
                       <span className="font-mono text-[10px] text-primary/60 mr-1.5 group-hover:text-primary transition-colors">
                         {item.num}
@@ -127,61 +113,49 @@ const Header: React.FC = () => {
                           transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                         />
                       )}
-                    </motion.a>
+                    </a>
                   );
                 })}
               </nav>
 
               {/* Theme Toggle */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
-              >
+              <div className="animate-fade-down" style={{ animationDelay: '0.3s' }}>
                 <WhimsicalCelestialToggle />
-              </motion.div>
+              </div>
 
               {/* Mobile Menu Button */}
-              <motion.button
-                className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-1.5"
+              <button
+                className="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-1.5 animate-fade-down"
+                style={{ animationDelay: '0.25s' }}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
               >
-                <motion.span 
-                  className="w-6 h-[2px] bg-foreground block"
-                  animate={{ 
-                    rotate: mobileMenuOpen ? 45 : 0,
-                    y: mobileMenuOpen ? 5 : 0
-                  }}
+                <span 
+                  className={`w-6 h-[2px] bg-foreground block transition-transform duration-300 ${
+                    mobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
+                  }`}
                 />
-                <motion.span 
-                  className="w-6 h-[2px] bg-foreground block"
-                  animate={{ 
-                    opacity: mobileMenuOpen ? 0 : 1
-                  }}
+                <span 
+                  className={`w-6 h-[2px] bg-foreground block transition-opacity duration-300 ${
+                    mobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                  }`}
                 />
-                <motion.span 
-                  className="w-6 h-[2px] bg-foreground block"
-                  animate={{ 
-                    rotate: mobileMenuOpen ? -45 : 0,
-                    y: mobileMenuOpen ? -5 : 0
-                  }}
+                <span 
+                  className={`w-6 h-[2px] bg-foreground block transition-transform duration-300 ${
+                    mobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
+                  }`}
                 />
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Subtle bottom border when scrolled */}
-        <motion.div 
-          className="absolute bottom-0 left-0 right-0 h-px bg-border"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: scrolled ? 1 : 0 }}
-          transition={{ duration: 0.5 }}
+        <div 
+          className={`absolute bottom-0 left-0 right-0 h-px bg-border transition-transform duration-500 origin-left ${
+            scrolled ? 'scale-x-100' : 'scale-x-0'
+          }`}
         />
-      </motion.header>
+      </header>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
