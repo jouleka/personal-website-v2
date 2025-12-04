@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+"use client";
+
+import React, { useEffect, useState, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 
-const WhimsicalCelestialToggle: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+const ThemeToggle: React.FC = () => {
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -11,116 +13,87 @@ const WhimsicalCelestialToggle: React.FC = () => {
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  }, [theme, setTheme]);
-
-  const isDark = useMemo(() => theme === 'dark', [theme]);
-
-  const sunAnimation = useCallback(() => ({
-    opacity: isDark ? 0 : 1,
-    scale: isDark ? 0.5 : 1,
-    x: isDark ? 8 : 0,
-    y: isDark ? 8 : 0,
-  }), [isDark]);
-
-  const moonAnimation = useCallback(() => ({
-    opacity: isDark ? 1 : 0,
-    scale: isDark ? 1 : 0.5,
-    x: isDark ? 0 : -8,
-    y: isDark ? 0 : -8,
-  }), [isDark]);
-
-  const starsAnimation = useCallback(() => ({
-    opacity: isDark ? 1 : 0,
-  }), [isDark]);
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  }, [resolvedTheme, setTheme]);
 
   if (!mounted) {
-    return null;
+    return (
+      <div className="w-10 h-10 border border-border rounded-sm" />
+    );
   }
 
+  const isDark = resolvedTheme === 'dark';
+
   return (
-    <motion.div
-      className="relative w-8 h-8 cursor-pointer"
+    <motion.button
       onClick={toggleTheme}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
+      className="relative w-10 h-10 border border-border hover:border-foreground/40 transition-colors flex items-center justify-center group"
+      whileTap={{ scale: 0.95 }}
+      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
-      <svg
-        viewBox="0 0 32 32"
-        className="w-full h-full"
+      {/* Sun icon */}
+      <motion.svg
+        viewBox="0 0 24 24"
+        className="w-5 h-5 absolute"
+        initial={false}
+        animate={{
+          opacity: isDark ? 0 : 1,
+          scale: isDark ? 0.5 : 1,
+          rotate: isDark ? -90 : 0,
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        {/* Background circle */}
-        <circle cx="16" cy="16" r="16" fill={isDark ? '#1a1a2e' : '#87CEEB'} />
+        <circle 
+          cx="12" 
+          cy="12" 
+          r="4" 
+          className="fill-none stroke-foreground" 
+          strokeWidth="1.5"
+        />
+        {/* Rays */}
+        <g className="stroke-foreground" strokeWidth="1.5" strokeLinecap="round">
+          <line x1="12" y1="2" x2="12" y2="4" />
+          <line x1="12" y1="20" x2="12" y2="22" />
+          <line x1="4" y1="12" x2="2" y2="12" />
+          <line x1="22" y1="12" x2="20" y2="12" />
+          <line x1="5.64" y1="5.64" x2="4.22" y2="4.22" />
+          <line x1="19.78" y1="19.78" x2="18.36" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        </g>
+      </motion.svg>
 
-        {/* Sun */}
-        <motion.g
-          initial={sunAnimation()}
-          animate={sunAnimation()}
-          transition={{ duration: 0.5 }}
-        >
-          <circle cx="16" cy="16" r="7" fill="#FFD700" />
-          {/* Sun rays */}
-          {[...Array(8)].map((_, i) => (
-            <line
-              key={i}
-              x1="16"
-              y1="16"
-              x2={16 + 6 * Math.cos(i * Math.PI / 4)}
-              y2={16 + 6 * Math.sin(i * Math.PI / 4)}
-              stroke="#FFD700"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          ))}
-          {/* Quirky sun face */}
-          <circle cx="14" cy="15" r="1" fill="#1a1a2e" />
-          <circle cx="18" cy="15" r="1" fill="#1a1a2e" />
-          <path d="M14 18 Q16 20 18 18" fill="none" stroke="#1a1a2e" strokeWidth="1" />
-        </motion.g>
+      {/* Moon icon */}
+      <motion.svg
+        viewBox="0 0 24 24"
+        className="w-5 h-5 absolute"
+        initial={false}
+        animate={{
+          opacity: isDark ? 1 : 0,
+          scale: isDark ? 1 : 0.5,
+          rotate: isDark ? 0 : 90,
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        <path
+          d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"
+          className="fill-none stroke-foreground"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </motion.svg>
 
-        {/* Moon */}
-        <motion.g
-          initial={moonAnimation()}
-          animate={moonAnimation()}
-          transition={{ duration: 0.5 }}
-        >
-          <circle cx="16" cy="16" r="7" fill="white" />
-          {/* Moon craters */}
-          <circle cx="13" cy="14" r="1" fill="#D3D3D3" />
-          <circle cx="17" cy="19" r="1.5" fill="#D3D3D3" />
-          <circle cx="19" cy="13" r="1" fill="#D3D3D3" />
-          {/* Quirky moon face */}
-          <circle cx="14" cy="15" r="1" fill="#1a1a2e" />
-          <circle cx="18" cy="15" r="1" fill="#1a1a2e" />
-          <path d="M14 18 Q16 20 18 18" fill="none" stroke="#1a1a2e" strokeWidth="1" />
-        </motion.g>
-
-        {/* Stars */}
-        <motion.g
-          initial={starsAnimation()}
-          animate={starsAnimation()}
-          transition={{ duration: 0.5 }}
-        >
-          {[...Array(5)].map((_, i) => (
-            <motion.path
-              key={i}
-              d={`M${4 + i * 6} ${4 + (i % 2) * 3} L${5 + i * 6} ${5 + (i % 2) * 3} L${6 + i * 6} ${4 + (i % 2) * 3} L${5 + i * 6} ${3 + (i % 2) * 3} Z`}
-              fill="white"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{ 
-                repeat: Infinity,
-                duration: 2,
-                delay: i * 0.4,
-              }}
-            />
-          ))}
-        </motion.g>
-      </svg>
-    </motion.div>
+      {/* Hover accent line */}
+      <motion.span 
+        className="absolute bottom-0 left-0 h-[2px] bg-primary"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.2 }}
+        style={{ width: '100%', originX: 0 }}
+      />
+    </motion.button>
   );
 };
 
-export default WhimsicalCelestialToggle;
+export default ThemeToggle;

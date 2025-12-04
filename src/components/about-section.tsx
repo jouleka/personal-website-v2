@@ -1,25 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
 const AboutSection: React.FC = () => {
   const sectionRef = useRef(null);
   const controls = useAnimation();
-  const [typeIndex, setTypeIndex] = useState(0);
-  const roles = [
-    "Software Architect",
-    "System Designer",
-    "Code Craftsman",
-    "> sudo make impact"
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTypeIndex((prev) => (prev + 1) % roles.length);
-    }, 2000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -44,149 +30,139 @@ const AboutSection: React.FC = () => {
 
   return (
     <section id="about" ref={sectionRef} className="py-32 bg-background text-foreground overflow-hidden">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-12">
         <motion.div
-          className="max-w-5xl mx-auto relative"
+          className="max-w-6xl mx-auto"
           initial="hidden"
           animate={controls}
           variants={{
             hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
           }}
         >
-          {/* Matrix-like Background */}
-          <div className="absolute inset-0 overflow-hidden opacity-[0.03] select-none pointer-events-none">
-            <div className="font-mono text-xs leading-none whitespace-pre text-primary">
-              {Array(50).fill('01').join(' ')}
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 relative">
-            {/* Left Column */}
-            <motion.div
-              className="space-y-8"
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 }
-              }}
-            >
-              <div className="space-y-4">
-                <motion.p 
-                  className="font-mono text-sm text-primary/60"
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1 }
-                  }}
-                >
-                  {roles[typeIndex]}<span className="animate-pulse">_</span>
-                </motion.p>
-                <motion.p 
-                  className="text-5xl md:text-6xl font-playfair"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  Crafting
-                </motion.p>
-                <motion.p 
-                  className="text-6xl md:text-7xl font-playfair text-primary"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  Excellence
-                </motion.p>
-              </div>
-
-              <motion.div 
-                className="h-px w-24 bg-primary/20"
-                variants={{
-                  hidden: { width: 0 },
-                  visible: { width: 96 }
-                }}
-                transition={{ duration: 1 }}
-              />
-
-              <motion.div 
-                className="font-mono text-sm space-y-2"
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1 }
-                }}
-              >
-                <p className="text-primary/60">const approach = {`{`}</p>
-                <p className="pl-4">vision: <span className="text-primary">&quot;architectural thinking&quot;</span>,</p>
-                <p className="pl-4">execution: <span className="text-primary">&quot;pixel-perfect precision&quot;</span>,</p>
-                <p className="pl-4">standard: <span className="text-primary">&quot;excellence || nothing&quot;</span></p>
-                <p className="text-primary/60">{`}`};</p>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column */}
-            <motion.div
-              className="space-y-12"
-              variants={{
-                hidden: { opacity: 0, x: 20 },
-                visible: { opacity: 1, x: 0 }
-              }}
-            >
-              <div className="relative">
-                <div className="space-y-8">
-                  <div className="relative pl-8 border-l-2 border-primary/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-mono text-xs text-primary/60">01</span>
-                      <p className="text-2xl font-light">Transforming complexity into clarity</p>
-                    </div>
-                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;refactor: enhanced system architecture&quot;</p>
-                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
-                  </div>
-                  <div className="relative pl-8 border-l-2 border-primary/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-mono text-xs text-primary/60">02</span>
-                      <p className="text-2xl font-light">Building systems that define standards</p>
-                    </div>
-                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;feat: implemented next-gen architecture&quot;</p>
-                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
-                  </div>
-                  <div className="relative pl-8 border-l-2 border-primary/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-mono text-xs text-primary/60">03</span>
-                      <p className="text-2xl font-light">Creating experiences that leave marks</p>
-                    </div>
-                    <p className="text-sm text-muted-foreground/60 font-mono">git commit -m &quot;perf: optimized user experience&quot;</p>
-                    <span className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-primary/20" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Bottom Section */}
-          <motion.div
-            className="mt-24 relative border-t border-primary/10 pt-16 font-mono"
+          {/* Section Header */}
+          <motion.div 
+            className="mb-20"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 }
             }}
           >
-            <div className="grid grid-cols-3 gap-8">
-              <div className="text-center">
-                <p className="text-5xl font-playfair text-primary mb-2">4+</p>
-                <p className="text-xs tracking-widest text-muted-foreground/60">UPTIME_YEARS</p>
-              </div>
-              <div className="text-center">
-                <p className="text-5xl font-playfair text-primary mb-2">01</p>
-                <p className="text-xs tracking-widest text-muted-foreground/60">CORE_VISION</p>
-              </div>
-              <div className="text-center">
-                <p className="text-5xl font-playfair text-primary mb-2">∞</p>
-                <p className="text-xs tracking-widest text-muted-foreground/60">MAX_POTENTIAL</p>
-              </div>
-            </div>
+            <span className="text-sm font-mono text-primary mb-4 block">01 — ABOUT</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+              Writing code that<br />
+              <span className="text-primary">actually works</span>
+            </h2>
           </motion.div>
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+            {/* Left Column - Bio */}
+            <motion.div
+              className="lg:col-span-7 space-y-8"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+            >
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                I&apos;m a Full Stack JavaScript Developer who&apos;s been deep in the Angular/TypeScript 
+                ecosystem for 4+ years. I enjoy turning messy legacy code into something maintainable.
+              </p>
+              
+              <p className="text-lg text-muted-foreground/80 leading-relaxed">
+                Most of my work has been remote, building everything from multi-tenant platforms 
+                to e-learning systems. I care about clean architecture, reactive patterns, and 
+                shipping code that doesn&apos;t wake anyone up at 3am. Currently based in Albania, 
+                working with teams across Europe and the US.
+              </p>
+
+              <div className="pt-8 border-t border-border">
+                <div className="grid grid-cols-3 gap-8">
+                  <div>
+                    <span className="text-4xl md:text-5xl font-bold text-primary">4+</span>
+                    <p className="text-sm text-muted-foreground mt-2">Years<br />Shipping</p>
+                  </div>
+                  <div>
+                    <span className="text-4xl md:text-5xl font-bold text-primary">100%</span>
+                    <p className="text-sm text-muted-foreground mt-2">Remote<br />Experience</p>
+                  </div>
+                  <div>
+                    <span className="text-4xl md:text-5xl font-bold text-primary">∞</span>
+                    <p className="text-sm text-muted-foreground mt-2">Coffee<br />Consumed</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Details */}
+            <motion.div
+              className="lg:col-span-5 space-y-8"
+              variants={{
+                hidden: { opacity: 0, x: 20 },
+                visible: { opacity: 1, x: 0 }
+              }}
+            >
+              {/* What I Do */}
+              <div className="bg-card border border-border p-8 relative">
+                <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary -translate-y-1 -translate-x-1" />
+                
+                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-6">
+                  Day to Day
+                </h3>
+                
+                <ul className="space-y-4">
+                  {[
+                    'Building Angular apps that scale',
+                    'Refactoring legacy code without breaking things',
+                    'Setting up monorepos & CI/CD pipelines',
+                    'Hunting down performance bottlenecks',
+                    'Making state management less painful'
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-primary font-mono text-sm">0{index + 1}</span>
+                      <span className="text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Education */}
+              <div className="bg-card border border-border p-8">
+                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-4">
+                  Education
+                </h3>
+                <p className="font-medium mb-1">Bachelor&apos;s in Computer Engineering</p>
+                <p className="text-sm text-muted-foreground">Canadian Institute of Technology</p>
+                <p className="text-sm text-muted-foreground">2018 — 2021 · GPA: 3.8/4.0</p>
+              </div>
+
+              {/* Languages */}
+              <div className="bg-card border border-border p-8">
+                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-4">
+                  Languages
+                </h3>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Albanian</span>
+                    <span className="text-primary ml-2">Native</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">English</span>
+                    <span className="text-primary ml-2">C1/C2</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Italian</span>
+                    <span className="text-primary ml-2">B2/C1</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">German</span>
+                    <span className="text-primary ml-2">A2/B1</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
