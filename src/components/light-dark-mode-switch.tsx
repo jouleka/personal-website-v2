@@ -15,7 +15,21 @@ const ThemeToggle: React.FC = () => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   }, [resolvedTheme, setTheme]);
 
-  const isDark = mounted && resolvedTheme === 'dark';
+  // Show placeholder during SSR and until theme is resolved to avoid flicker
+  // Must be same element type (button) to prevent hydration mismatch
+  if (!mounted || !resolvedTheme) {
+    return (
+      <button
+        className="relative w-10 h-10 border border-border flex items-center justify-center"
+        aria-label="Toggle theme"
+        disabled
+      >
+        <span className="w-5 h-5" />
+      </button>
+    );
+  }
+
+  const isDark = resolvedTheme === 'dark';
 
   return (
     <button

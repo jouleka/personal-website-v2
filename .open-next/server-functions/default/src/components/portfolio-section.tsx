@@ -38,7 +38,7 @@ const projects: Project[] = [
     name: 'Great Wall of Ideas',
     description: 'A community-driven platform for sharing and discovering innovative ideas. A space where shower thoughts transform into potential projects, connecting visionaries with builders.',
     tools: 'Next.js/TailwindCSS/Supabase',
-    url: 'https://www.greatwallofideas.xyz/',
+    url: 'https://www.greatwallofideas.com/',
     images: ['great-wall-ideas-placeholder'],
   },
   {

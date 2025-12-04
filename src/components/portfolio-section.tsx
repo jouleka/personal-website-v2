@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Github, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Github, ExternalLink, ArrowUpRight, FileText } from 'lucide-react';
 
 interface Project {
   name: string;
@@ -11,6 +11,8 @@ interface Project {
   url: string;
   type: 'live' | 'github';
   featured?: boolean;
+  demoUrl?: string;
+  demoLabel?: string;
 }
 
 const projects: Project[] = [
@@ -18,7 +20,7 @@ const projects: Project[] = [
     name: 'Great Wall of Ideas',
     description: 'A place to dump your random ideas and see if anyone else thinks they\'re worth building.',
     tools: ['Next.js', 'Tailwind', 'Supabase'],
-    url: 'https://www.greatwallofideas.xyz/',
+    url: 'https://www.greatwallofideas.com/',
     type: 'live',
     featured: true
   },
@@ -27,7 +29,9 @@ const projects: Project[] = [
     description: 'Got tired of formatting resumes in Word, so I built this. Pick a template, fill in your stuff, export to PDF.',
     tools: ['React', 'TypeScript', 'Tailwind'],
     url: 'https://github.com/jouleka/cv-template',
-    type: 'github'
+    type: 'github',
+    demoUrl: '/resume.pdf',
+    demoLabel: 'View My Resume'
   },
   {
     name: 'Kraken Trading Bot',
@@ -164,11 +168,8 @@ const PortfolioSection: React.FC = () => {
             }}
           >
             {otherProjects.map((project, index) => (
-              <motion.a
+              <motion.div
                 key={project.name}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group bg-card border border-border p-6 relative hover:border-primary/30 transition-all flex flex-col"
                 variants={{
                   hidden: { opacity: 0, y: 20 },
@@ -177,32 +178,72 @@ const PortfolioSection: React.FC = () => {
               >
                 <div className="flex items-start justify-between mb-4">
                   <span className="text-xs font-mono text-muted-foreground">0{index + 1}</span>
-                  {project.type === 'github' ? (
-                    <Github className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-                  ) : (
-                    <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <div className="flex items-center gap-2">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                        title={project.demoLabel || 'View Demo'}
+                      >
+                        <FileText className="w-5 h-5" />
+                      </a>
+                    )}
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {project.type === 'github' ? (
+                        <Github className="w-5 h-5" />
+                      ) : (
+                        <ExternalLink className="w-5 h-5" />
+                      )}
+                    </a>
+                  </div>
+                </div>
+                
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-grow"
+                >
+                  <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">
+                    {project.name}
+                  </h3>
+                  
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                </a>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-border">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="text-xs text-muted-foreground"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline flex items-center gap-1"
+                    >
+                      {project.demoLabel || 'Demo'}
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
                   )}
                 </div>
-                
-                <h3 className="text-xl font-medium mb-3 group-hover:text-primary transition-colors">
-                  {project.name}
-                </h3>
-                
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-grow">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
-                  {project.tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="text-xs text-muted-foreground"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </motion.a>
+              </motion.div>
             ))}
           </motion.div>
 
