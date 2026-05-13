@@ -17,12 +17,19 @@ interface Project {
 
 const projects: Project[] = [
   {
+    name: 'MySigner',
+    description: 'One command to ship iOS or Android apps to TestFlight, the App Store, or Google Play. Handles all the provisioning profile and keystore nonsense Apple and Google make you deal with. Took forever to build. Worth it.',
+    tools: ['Rails', 'Hotwire', 'PostgreSQL', 'Ruby CLI'],
+    url: 'https://mysigner.dev',
+    type: 'live',
+    featured: true
+  },
+  {
     name: 'Great Wall of Ideas',
     description: 'A place to dump your random ideas and see if anyone else thinks they\'re worth building.',
     tools: ['Next.js', 'Tailwind', 'Supabase'],
     url: 'https://www.greatwallofideas.com/',
-    type: 'live',
-    featured: true
+    type: 'live'
   },
   {
     name: 'CV Template',
@@ -150,8 +157,8 @@ const PortfolioSection: React.FC = () => {
                   
                   <div className="relative aspect-video bg-secondary/50 border border-border flex items-center justify-center">
                     <div className="text-center p-8">
-                      <div className="text-6xl mb-4">💡</div>
-                      <p className="text-sm text-muted-foreground">Post your idea, find your builder</p>
+                      <div className="text-6xl mb-4">📱</div>
+                      <p className="text-sm text-muted-foreground">From code to TestFlight in one command</p>
                     </div>
                   </div>
                 </div>

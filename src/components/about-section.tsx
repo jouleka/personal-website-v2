@@ -67,21 +67,22 @@ const AboutSection: React.FC = () => {
               }}
             >
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                I&apos;m a Full Stack JavaScript Developer who&apos;s been deep in the Angular/TypeScript 
-                ecosystem for 4+ years. I enjoy turning messy legacy code into something maintainable.
+                Full Stack JavaScript Developer. I&apos;ve been writing Angular and TypeScript
+                for 5+ years, mostly cleaning up legacy code other people had given up on.
               </p>
-              
+
               <p className="text-lg text-muted-foreground/80 leading-relaxed">
-                Most of my work has been remote, building everything from multi-tenant platforms 
-                to e-learning systems. I care about clean architecture, reactive patterns, and 
-                shipping code that doesn&apos;t wake anyone up at 3am. Currently based in Albania, 
-                working with teams across Europe and the US.
+                Most of it&apos;s been remote. Multi-tenant platforms, e-learning systems,
+                and a CLI that ships mobile apps to the App Store and Google Play. I like
+                getting the architecture right the first time so I don&apos;t have to fight it later.
+                Code that doesn&apos;t wake anyone up at 3am. Based in Tirana, working with
+                teams across Europe and the US.
               </p>
 
               <div className="pt-8 border-t border-border">
                 <div className="grid grid-cols-3 gap-8">
                   <div>
-                    <span className="text-4xl md:text-5xl font-bold text-primary">4+</span>
+                    <span className="text-4xl md:text-5xl font-bold text-primary">5+</span>
                     <p className="text-sm text-muted-foreground mt-2">Years<br />Shipping</p>
                   </div>
                   <div>
@@ -114,7 +115,7 @@ const AboutSection: React.FC = () => {
                 
                 <ul className="space-y-4">
                   {[
-                    'Building Angular apps that scale',
+                    'Building Angular apps that don\'t fall over',
                     'Refactoring legacy code without breaking things',
                     'Setting up monorepos & CI/CD pipelines',
                     'Hunting down performance bottlenecks',

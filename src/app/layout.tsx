@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: '%s | Jurgen Leka',
     default: 'Jurgen Leka - Full Stack JavaScript Developer',
   },
-  description: 'Full Stack JavaScript Developer specializing in Angular, TypeScript, and React. Building scalable web applications with clean architecture.',
+  description: 'Full Stack JavaScript Developer. Angular, TypeScript, React. Builder of MySigner. Based in Tirana, working with teams across Europe and the US.',
   keywords: ['JavaScript', 'TypeScript', 'Angular', 'React', 'Full Stack Developer', 'Web Developer'],
   authors: [{ name: 'Jurgen Leka' }],
   creator: 'Jurgen Leka',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     siteName: 'Jurgen Leka',
     title: 'Jurgen Leka - Full Stack JavaScript Developer',
-    description: 'Full Stack JavaScript Developer specializing in Angular, TypeScript, and React.',
+    description: 'Full Stack JavaScript Developer working with Angular, TypeScript, and React. Builder of MySigner.',
   },
   twitter: {
     card: 'summary_large_image',

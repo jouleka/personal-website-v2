@@ -113,7 +113,7 @@ const Hero: React.FC = () => {
                 
                 <div className="flex items-center justify-between border-b border-border pb-4">
                   <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Experience</span>
-                  <span className="text-sm">4+ Years</span>
+                  <span className="text-sm">5+ Years</span>
                 </div>
 
                 <div className="pt-2">
