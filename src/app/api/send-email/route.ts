@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-export const runtime = 'edge';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = 'nodejs';
 
 // Sanitize name for RFC 5322 email header (remove dangerous chars)
 function sanitizeName(name: string): string {
@@ -15,13 +13,25 @@ function sanitizeName(name: string): string {
 }
 
 export async function POST(req: Request) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  const toEmail = process.env.EMAIL_TO;
+
+  if (!apiKey || !fromEmail || !toEmail) {
+    return NextResponse.json(
+      { success: false, error: 'Email service is not configured' },
+      { status: 503 },
+    );
+  }
+
+  const resend = new Resend(apiKey);
   const { name, email, message } = await req.json();
   const safeName = sanitizeName(name);
 
   try {
     const { error } = await resend.emails.send({
-      from: `${safeName} <${process.env.RESEND_FROM_EMAIL}>`,
-      to: process.env.EMAIL_TO!,
+      from: `${safeName} <${fromEmail}>`,
+      to: toEmail,
       replyTo: email,
       subject: `New message from ${safeName}`,
       text: `From: ${safeName} <${email}>\n\n${message}`,
@@ -35,7 +45,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: 'Failed to send email' }, { status: 500 });
   }
 }

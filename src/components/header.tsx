@@ -14,7 +14,6 @@ const navItems = [
 
 const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollListenerRef = useRef<(() => void) | null>(null);
@@ -49,7 +48,6 @@ const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setMounted(true);
     scrollListenerRef.current = handleScroll;
     window.addEventListener('scroll', scrollListenerRef.current, { passive: true });
 
@@ -91,7 +89,7 @@ const Header: React.FC = () => {
               {/* Desktop Navigation - Numbered items */}
               <nav className="hidden md:flex items-center gap-1">
                 {navItems.map((item, index) => {
-                  const isActive = mounted && activeSection === item.href;
+                  const isActive = activeSection === item.href;
                   return (
                     <a
                       key={item.href}

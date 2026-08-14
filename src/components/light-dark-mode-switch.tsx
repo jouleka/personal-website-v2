@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useSyncExternalStore } from 'react';
 import { useTheme } from 'next-themes';
 
 const ThemeToggle: React.FC = () => {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const toggleTheme = useCallback(() => {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');

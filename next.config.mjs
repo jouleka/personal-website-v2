@@ -28,26 +28,6 @@ const nextConfig = {
           },
         ],
       },
-      // Next.js static chunks
-      {
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      // Next.js image optimization
-      {
-        source: '/_next/image/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
       // API routes - no cache
       {
         source: '/api/:path*',
