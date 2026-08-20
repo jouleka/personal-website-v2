@@ -67,16 +67,15 @@ const AboutSection: React.FC = () => {
               }}
             >
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                Full Stack JavaScript Developer. I&apos;ve been writing Angular and TypeScript
-                for 5+ years, mostly cleaning up legacy code other people had given up on.
+                I&apos;m a product engineer who likes difficult systems: mature enterprise frontends,
+                mobile release automation, local-first apps, and research software with explicit safety boundaries.
               </p>
 
               <p className="text-lg text-muted-foreground/80 leading-relaxed">
-                Most of it&apos;s been remote. Multi-tenant platforms, e-learning systems,
-                and a CLI that ships mobile apps to the App Store and Google Play. I like
-                getting the architecture right the first time so I don&apos;t have to fight it later.
-                Code that doesn&apos;t wake anyone up at 3am. Based in Tirana, working with
-                teams across Europe and the US.
+                My day job is still grounded in Angular and TypeScript, but the things I ship now span
+                Rails, Python, Swift, Bun, FastAPI, and CLIs. The common thread is dependable product
+                engineering: clear authority, useful interfaces, strong tests, and code that can survive
+                real use. Based in Tirana, working with teams across Europe and the US.
               </p>
 
               <div className="pt-8 border-t border-border">
@@ -90,8 +89,8 @@ const AboutSection: React.FC = () => {
                     <p className="text-sm text-muted-foreground mt-2">Remote<br />Experience</p>
                   </div>
                   <div>
-                    <span className="text-4xl md:text-5xl font-bold text-primary">∞</span>
-                    <p className="text-sm text-muted-foreground mt-2">Coffee<br />Consumed</p>
+                    <span className="text-4xl md:text-5xl font-bold text-primary">11</span>
+                    <p className="text-sm text-muted-foreground mt-2">Selected<br />Systems</p>
                   </div>
                 </div>
               </div>
@@ -115,11 +114,11 @@ const AboutSection: React.FC = () => {
                 
                 <ul className="space-y-4">
                   {[
-                    'Building Angular apps that don\'t fall over',
-                    'Refactoring legacy code without breaking things',
-                    'Setting up monorepos & CI/CD pipelines',
-                    'Hunting down performance bottlenecks',
-                    'Making state management less painful'
+                    'Designing product architecture and sharp interfaces',
+                    'Modernizing large Angular systems safely',
+                    'Building native, backend, and CLI workflows',
+                    'Encoding risk and authority as deterministic gates',
+                    'Testing the edge cases before users find them'
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <span className="text-primary font-mono text-sm">0{index + 1}</span>

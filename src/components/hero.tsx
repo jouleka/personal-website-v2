@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden animate-fade-in-slow"
       >
         <span className="text-[20vw] font-bold text-foreground/[0.02] dark:text-foreground/[0.03] tracking-tighter whitespace-nowrap">
-          DEVELOPER
+          BUILDER
         </span>
       </div>
 
@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
           <div className="lg:col-span-7 lg:col-start-1">
             <div className="animate-fade-up" style={{ animationDelay: '0.05s' }}>
               <span className="inline-block text-sm font-mono text-primary mb-6 tracking-wider">
-                FULL STACK JAVASCRIPT DEVELOPER
+                PRODUCT ENGINEER · FULL STACK
               </span>
             </div>
 
@@ -63,7 +63,7 @@ const Hero: React.FC = () => {
               className="text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-12 animate-fade-up"
               style={{ animationDelay: '0.15s' }}
             >
-              I build web apps with Angular &amp; TypeScript. Currently making multi-tenant platforms less painful.
+              I design and ship serious software—from enterprise web platforms to native iOS, developer tools, and carefully bounded AI systems.
             </p>
 
             <div
@@ -117,9 +117,9 @@ const Hero: React.FC = () => {
                 </div>
 
                 <div className="pt-2">
-                  <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-3">Stack</span>
+                  <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider block mb-3">Building across</span>
                   <div className="flex flex-wrap gap-2">
-                    {['Angular', 'TypeScript', 'RxJS', 'Node.js'].map((tech) => (
+                    {['Web', 'Mobile', 'CLI', 'AI systems'].map((tech) => (
                       <span 
                         key={tech}
                         className="text-xs px-2 py-1 bg-secondary text-secondary-foreground"

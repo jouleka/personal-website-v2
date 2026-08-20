@@ -1,54 +1,60 @@
-# Personal Portfolio Website
+# Jurgen Leka — Portfolio
 
-My personal portfolio website built with Next.js, showcasing my projects, skills, and experience. The website features a modern, responsive design with dark/light mode support, smooth animations, and some hidden fun easter eggs.
+The source for [jurgenleka.com](https://jurgenleka.com): an editorial portfolio for Jurgen Leka's product engineering work across enterprise web platforms, native iOS, developer tools, and carefully bounded AI systems.
 
-## Features
+## What is showcased
 
-- 🎨 Modern and clean design
-- 🌓 Dark/Light mode support
-- ✨ Smooth animations using Framer Motion
-- 📱 Fully responsive layout
-- 📧 Contact form with email integration
-- 🎉 Some hidden fun easter eggs
+- **MySigner** — mobile signing and release automation through a Rails dashboard, API, and Ruby CLI
+- **Aichu** — local secret redaction for prompts sent through AI coding agents
+- **Subtitle.fm** — AI-assisted, realtime collaborative subtitle production
+- **Reading Companion** — a local-first EPUB reader with spoiler-bounded story memory
+- **Goldengo** — a privacy-minded native iOS personal-finance app
+- **OopsFee** — a cross-platform promises, verification, and accountability product
+- **OptionsBot** — paper-only IBKR options research and deterministic execution controls
+- **Polymarket Bot** — paper-only prediction-market research with a separate execution and risk service
+- **Great Wall of Ideas** — realtime idea discovery, discussion, and remixing
+- **Resume Builder** — a typed, configurable, print-ready CV system
+- **Chat Application** — an early Angular realtime group-messaging product
 
-## Tech Stack
+Each selected project has a small interface artifact built directly in React and CSS. The portfolio does not depend on a gallery of external screenshots and stays useful in both light and dark themes.
 
-- **Framework**: Next.js 14
-- **Styling**: TailwindCSS
-- **Animations**: Framer Motion
-- **Deployment**: Vercel
-- **Email Service**: SMTP Integration
+## Stack
 
-## Getting Started
+- Next.js 16 and React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Resend for the contact form
+- OpenNext for Cloudflare deployment
 
-1. Clone the repository:
+## Local development
+
 ```bash
-git clone https://github.com/your-username/personal-website-v2.git
+git clone https://github.com/jouleka/personal-website-v2.git
 cd personal-website-v2
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
-
-3. Create a `.env.local` file in the root directory and add your environment variables:
-```bash
+npm ci
 cp .env.example .env.local
-```
-Then update the values in `.env.local` with your actual configuration.
-
-4. Run the development server:
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. The site renders without contact-form credentials; configure the values documented in `.env.example` to send messages.
+
+## Verification
+
+```bash
+npm run lint
+npm run build
+```
+
+## Deployment
+
+The checked-in OpenNext scripts target Cloudflare:
+
+```bash
+npm run preview
+npm run deploy
+```
 
 ## License
 
-Feel free to use this project as inspiration for your own portfolio, but please give credit if you do!
+The site content and design are personal portfolio material. You may use the code as inspiration, but do not present Jurgen's identity, copy, or project work as your own.

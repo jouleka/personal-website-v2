@@ -69,19 +69,19 @@ const workExperiences: Experience[] = [
 const expertiseAreas: Expertise[] = [
   {
     category: "Frontend",
-    skills: ["Angular", "React", "TypeScript", "RxJS", "NgRx", "Tailwind"]
+    skills: ["Angular", "React", "TypeScript", "React Native", "SvelteKit", "Tailwind"]
   },
   {
-    category: "Backend",
-    skills: ["Node.js", "Spring Boot", "HapiJS", "Next.js", "REST", "GraphQL"]
+    category: "Backend & Tools",
+    skills: ["Rails", "Python", "FastAPI", "Rust", "Bun", "Ruby CLI"]
   },
   {
     category: "Data & Ops",
-    skills: ["PostgreSQL", "MongoDB", "Docker", "CI/CD", "Git"]
+    skills: ["PostgreSQL", "SQLite", "CloudKit", "Docker", "CI/CD", "GitHub Actions"]
   },
   {
-    category: "The Rest",
-    skills: ["Monorepos", "Multi-tenant", "Testing", "Agile"]
+    category: "Product Systems",
+    skills: ["SwiftUI", "AI Pipelines", "Risk Engines", "Realtime", "PWA", "Testing"]
   }
 ];
 

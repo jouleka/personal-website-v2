@@ -45,7 +45,7 @@ export default function Footer() {
               <span className="text-primary">J</span>LEKA
             </button>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Building things with Angular &amp; TypeScript. Probably refactoring something right now.
+              Product engineering across web, native iOS, developer tools, and carefully bounded AI systems.
             </p>
           </div>
 

@@ -15,6 +15,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap',
+  variable: '--font-playfair-display',
 });
 
 export const viewport: Viewport = {
@@ -29,10 +30,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: {
     template: '%s | Jurgen Leka',
-    default: 'Jurgen Leka - Full Stack JavaScript Developer',
+    default: 'Jurgen Leka — Product Engineer & Builder',
   },
-  description: 'Full Stack JavaScript Developer. Angular, TypeScript, React. Builder of MySigner. Based in Tirana, working with teams across Europe and the US.',
-  keywords: ['JavaScript', 'TypeScript', 'Angular', 'React', 'Full Stack Developer', 'Web Developer'],
+  description: 'Product engineer building enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems. Creator of MySigner.',
+  keywords: ['Product Engineer', 'Full Stack Developer', 'Angular', 'TypeScript', 'Swift', 'Python', 'Rust', 'React Native', 'Ruby on Rails', 'Developer Tools'],
   authors: [{ name: 'Jurgen Leka' }],
   creator: 'Jurgen Leka',
   metadataBase: new URL('https://jurgenleka.com'),
@@ -40,8 +41,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     siteName: 'Jurgen Leka',
-    title: 'Jurgen Leka - Full Stack JavaScript Developer',
-    description: 'Full Stack JavaScript Developer working with Angular, TypeScript, and React. Builder of MySigner.',
+    title: 'Jurgen Leka — Product Engineer & Builder',
+    description: 'Enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -76,7 +77,7 @@ export default function RootLayout({
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
       </head>
-      <body className={`${inter.className} ${playfair.className}`}>
+      <body className={`${inter.className} ${playfair.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>

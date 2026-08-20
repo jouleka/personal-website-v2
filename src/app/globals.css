@@ -198,3 +198,69 @@ html {
 .animate-bounce-subtle {
   animation: bounce-subtle 1.5s ease-in-out infinite;
 }
+
+.project-grid {
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.45) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+}
+
+.project-card {
+  position: relative;
+  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.55), transparent 28%, transparent 72%, hsl(var(--primary) / 0.2)) border-box;
+  mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px hsl(var(--foreground) / 0.08);
+}
+
+.project-card:hover::after {
+  opacity: 1;
+}
+
+.project-artifact {
+  background-image: radial-gradient(circle at 80% 15%, hsl(var(--primary) / 0.11), transparent 35%);
+}
+
+.project-link svg {
+  transition: transform 180ms ease;
+}
+
+.project-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .project-card:hover {
+    transform: none;
+  }
+}
