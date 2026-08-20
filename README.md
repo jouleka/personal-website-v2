@@ -48,7 +48,10 @@ npm run build
 
 ## Deployment
 
-The checked-in OpenNext scripts target Cloudflare:
+Production runs as an OpenNext Cloudflare Worker on `jurgenleka.com` and
+`www.jurgenleka.com`. The checked-in Wrangler configuration includes the
+Worker entry point, static assets, domain routes, and R2 incremental cache
+binding. Contact-form values stay in Cloudflare secrets and are never committed.
 
 ```bash
 npm run preview
