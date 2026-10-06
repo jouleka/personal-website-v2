@@ -1,52 +1,80 @@
-import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
-import './globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import type { Metadata, Viewport } from "next";
+import { DM_Sans, Instrument_Serif, DM_Mono } from "next/font/google";
+import "./globals.css";
+import "lenis/dist/lenis.css";
+import "./editorial-motion.css";
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
+const sans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
   preload: true,
-  fallback: ['system-ui', 'sans-serif'],
+  fallback: ["system-ui", "sans-serif"],
 });
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-  variable: '--font-playfair-display',
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-display",
+});
+
+const mono = DM_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-mono",
 });
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#faf9f7' },
-    { media: '(prefers-color-scheme: dark)', color: '#12100e' },
-  ],
+  themeColor: "#eeece2",
 };
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Jurgen Leka',
-    default: 'Jurgen Leka — Product Engineer & Builder',
+    template: "%s | Jurgen Leka",
+    default: "Jurgen Leka — Product Engineer & Builder",
   },
-  description: 'Product engineer building enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems. Creator of MySigner.',
-  keywords: ['Product Engineer', 'Full Stack Developer', 'Angular', 'TypeScript', 'Swift', 'Python', 'Rust', 'React Native', 'Ruby on Rails', 'Developer Tools'],
-  authors: [{ name: 'Jurgen Leka' }],
-  creator: 'Jurgen Leka',
-  metadataBase: new URL('https://jurgenleka.com'),
+  description:
+    "Product engineer building enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems. Creator of MySigner.",
+  keywords: [
+    "Product Engineer",
+    "Full Stack Developer",
+    "Angular",
+    "TypeScript",
+    "Swift",
+    "Python",
+    "Rust",
+    "React Native",
+    "Ruby on Rails",
+    "Developer Tools",
+  ],
+  authors: [{ name: "Jurgen Leka" }],
+  creator: "Jurgen Leka",
+  metadataBase: new URL("https://jurgenleka.com"),
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Jurgen Leka',
-    title: 'Jurgen Leka — Product Engineer & Builder',
-    description: 'Enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems.',
+    images: [
+      {
+        url: "/social-preview.png?v=jl1",
+        width: 1200,
+        height: 630,
+        alt: "Jurgen Leka — Code. Ship. Repeat.",
+      },
+    ],
+    type: "website",
+    locale: "en_US",
+    siteName: "Jurgen Leka",
+    title: "Jurgen Leka — Product Engineer & Builder",
+    description:
+      "Enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems.",
   },
   twitter: {
-    card: 'summary_large_image',
-    creator: '@jou_leka',
+    images: ["/social-preview.png?v=jl1"],
+    card: "summary_large_image",
+    creator: "@jou_leka",
   },
   robots: {
     index: true,
@@ -54,13 +82,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.ico', sizes: '48x48' },
+      { url: "/favicon.svg?v=jl1", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png?v=jl1", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico?v=jl1", sizes: "48x48" },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: "/apple-touch-icon.png?v=jl1",
   },
-  manifest: '/site.webmanifest',
+  manifest: "/site.webmanifest?v=jl1",
 };
 
 export default function RootLayout({
@@ -69,18 +97,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Preconnect to critical origins */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* DNS prefetch for external resources */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      </head>
-      <body className={`${inter.className} ${playfair.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+        {children}
       </body>
     </html>
   );

@@ -1,16 +1,16 @@
-import type { Config } from "tailwindcss"
-import tailwindcssAnimate from "tailwindcss-animate"
+import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './src/pages/**/*.{ts,tsx}',
-    './src/components/**/*.{ts,tsx}',
-    './src/app/**/*.{ts,tsx}',
+    "./src/pages/**/*.{ts,tsx}",
+    "./src/components/**/*.{ts,tsx}",
+    "./src/app/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
-    scrollBehavior: 'smooth',
+    scrollBehavior: "smooth",
     container: {
       center: true,
       padding: "2rem",
@@ -74,7 +74,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        playfair: ['var(--font-playfair-display)', 'serif'],
+        sans: ["var(--font-sans)", "sans-serif"],
+        serif: ["var(--font-display)", "serif"],
+        mono: ["var(--font-mono)", "monospace"],
+        playfair: ["var(--font-display)", "serif"],
       },
     },
   },
@@ -82,6 +85,6 @@ const config = {
   future: {
     hoverOnlyWhenSupported: true,
   },
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

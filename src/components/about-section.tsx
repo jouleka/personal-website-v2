@@ -1,173 +1,72 @@
-"use client";
-
-import React, { useEffect, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-
-const AboutSection: React.FC = () => {
-  const sectionRef = useRef(null);
-  const controls = useAnimation();
-
-  useEffect(() => {
-    const currentRef = sectionRef.current;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible");
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [controls]);
-
+import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "./motion-system";
+export default function AboutSection() {
   return (
-    <section id="about" ref={sectionRef} className="py-32 bg-background text-foreground overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12">
-        <motion.div
-          className="max-w-6xl mx-auto"
-          initial="hidden"
-          animate={controls}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-          }}
-        >
-          {/* Section Header */}
-          <motion.div 
-            className="mb-20"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 }
-            }}
-          >
-            <span className="text-sm font-mono text-primary mb-4 block">01 — ABOUT</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              Writing code that<br />
-              <span className="text-primary">actually works</span>
-            </h2>
-          </motion.div>
-
-          {/* Main Content Grid */}
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
-            {/* Left Column - Bio */}
-            <motion.div
-              className="lg:col-span-7 space-y-8"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 }
-              }}
-            >
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                I&apos;m a product engineer who likes difficult systems: mature enterprise frontends,
-                mobile release automation, local-first apps, and research software with explicit safety boundaries.
-              </p>
-
-              <p className="text-lg text-muted-foreground/80 leading-relaxed">
-                My day job is still grounded in Angular and TypeScript, but the things I ship now span
-                Rails, Python, Swift, Bun, FastAPI, and CLIs. The common thread is dependable product
-                engineering: clear authority, useful interfaces, strong tests, and code that can survive
-                real use. Based in Tirana, working with teams across Europe and the US.
-              </p>
-
-              <div className="pt-8 border-t border-border">
-                <div className="grid grid-cols-3 gap-8">
-                  <div>
-                    <span className="text-4xl md:text-5xl font-bold text-primary">5+</span>
-                    <p className="text-sm text-muted-foreground mt-2">Years<br />Shipping</p>
-                  </div>
-                  <div>
-                    <span className="text-4xl md:text-5xl font-bold text-primary">100%</span>
-                    <p className="text-sm text-muted-foreground mt-2">Remote<br />Experience</p>
-                  </div>
-                  <div>
-                    <span className="text-4xl md:text-5xl font-bold text-primary">11</span>
-                    <p className="text-sm text-muted-foreground mt-2">Selected<br />Systems</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right Column - Details */}
-            <motion.div
-              className="lg:col-span-5 space-y-8"
-              variants={{
-                hidden: { opacity: 0, x: 20 },
-                visible: { opacity: 1, x: 0 }
-              }}
-            >
-              {/* What I Do */}
-              <div className="bg-card border border-border p-8 relative">
-                <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary -translate-y-1 -translate-x-1" />
-                
-                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-6">
-                  Day to Day
-                </h3>
-                
-                <ul className="space-y-4">
-                  {[
-                    'Designing product architecture and sharp interfaces',
-                    'Modernizing large Angular systems safely',
-                    'Building native, backend, and CLI workflows',
-                    'Encoding risk and authority as deterministic gates',
-                    'Testing the edge cases before users find them'
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-primary font-mono text-sm">0{index + 1}</span>
-                      <span className="text-sm">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Education */}
-              <div className="bg-card border border-border p-8">
-                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-4">
-                  Education
-                </h3>
-                <p className="font-medium mb-1">Bachelor&apos;s in Computer Engineering</p>
-                <p className="text-sm text-muted-foreground">Canadian Institute of Technology</p>
-                <p className="text-sm text-muted-foreground">2018 — 2021 · GPA: 3.8/4.0</p>
-              </div>
-
-              {/* Languages */}
-              <div className="bg-card border border-border p-8">
-                <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-4">
-                  Languages
-                </h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-muted-foreground">Albanian</span>
-                    <span className="text-primary ml-2">Native</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">English</span>
-                    <span className="text-primary ml-2">C1/C2</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Italian</span>
-                    <span className="text-primary ml-2">B2/C1</span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">German</span>
-                    <span className="text-primary ml-2">A2/B1</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+    <section id="about" className="about-section">
+      <Reveal className="page-width about-grid">
+        <div className="about-label">
+          <span className="eyebrow">
+            02 / Off the clock, still on the keyboard
+          </span>
+          <div className="about-print" aria-hidden="true">
+            <span className="print-sun">↗</span>
+            <span>
+              One more
+              <br />
+              <em>side project.</em>
+            </span>
+            <small>JL / THE TABS ARE NEVER CLOSED</small>
           </div>
-        </motion.div>
-      </div>
+        </div>
+        <div className="about-copy">
+          <h2>
+            I make things.
+            <br />
+            <em>Then make them better.</em>
+          </h2>
+          <p className="large-copy">
+            Half my projects start with “this is annoying.” The other half start
+            with “what if?”
+          </p>
+          <p>
+            I&apos;m Jurgen, a product engineer based in Europe. I work with
+            teams across Europe and the US, mostly in Angular and TypeScript.
+            Outside that, I build iOS apps, release tools, local-first software,
+            and AI experiments.
+          </p>
+          <p>
+            I like clean interfaces, fast feedback, and code that holds up when
+            someone uses it in a way I didn&apos;t expect. Getting it working is
+            the start. Getting it right is the fun part.
+          </p>
+          <a
+            className="text-link"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Grab my résumé <ArrowUpRight size={18} />
+          </a>
+          <div className="about-facts">
+            <div>
+              <strong>5+</strong>
+              <span>years shipping</span>
+            </div>
+            <div>
+              <strong>11</strong>
+              <span>selected products</span>
+            </div>
+            <div>
+              <strong>01</strong>
+              <span>more idea, probably</span>
+            </div>
+          </div>
+          <p className="education-note">
+            BSc Computer Engineering · Canadian Institute of Technology ·
+            2018–2021
+          </p>
+        </div>
+      </Reveal>
     </section>
   );
-};
-
-export default AboutSection;
+}

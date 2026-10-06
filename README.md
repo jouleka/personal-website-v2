@@ -16,14 +16,24 @@ The source for [jurgenleka.com](https://jurgenleka.com): an editorial portfolio 
 - **Resume Builder** — a typed, configurable, print-ready CV system
 - **Chat Application** — an early Angular realtime group-messaging product
 
-Each selected project has a small interface artifact built directly in React and CSS. The portfolio does not depend on a gallery of external screenshots and stays useful in both light and dark themes.
+Four featured projects have original interface studies built directly in React and CSS. All eleven projects remain available in a filterable index with expandable workflow illustrations and repository links. The studies illustrate the products; they are not screenshots or live product interfaces.
+
+## Art direction
+
+Parchment, olive, terracotta, peach, and dusty lilac; oversized DM Sans headlines, Instrument Serif accents, and DM Mono labels. The copy is direct and playful: “Code. Ship. Repeat.”
+
+The opening sculpture has 26 CSS planes, a continuous 3D rotation, pointer tilt, and three remixable forms. Masked entrance typography, a looping marquee, scroll parallax, sticky project panels, magnetic links, pointer-following project labels, section reveals, and a curved contact transition give the page a consistent motion language. Lenis smooths desktop wheel scrolling and anchors; touch scrolling stays native. Motion is always enabled, with no switch or stored preference. The public location is Europe.
+
+The design draws on [Miranda's paper portfolio](https://www.niccolomiranda.com/), [Dennis Snellenberg's typographic scale](https://dennissnellenberg.com/), [Rauno Freiberg's interaction craft](https://rauno.me/), and [Bruno Simon's sense of play](https://bruno-simon.com/). Layouts, artwork, interface studies, and implementation are original to this portfolio.
+
+The custom JL monogram combines a curved J, squared L, and terracotta accent. `public/logo-mark.svg` is the master vector. Run `npm run brand:generate` to regenerate favicon sizes and the social preview from that source.
 
 ## Stack
 
 - Next.js 16 and React 19
 - TypeScript
 - Tailwind CSS
-- Framer Motion
+- Framer Motion, Lenis, CSS 3D transforms, and native disclosure controls
 - Resend for the contact form
 - OpenNext for Cloudflare deployment
 
