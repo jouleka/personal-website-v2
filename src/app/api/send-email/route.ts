@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { contactBodyError, contactError, limitContactDelivery, readContactBody, validateContactHeaders } from "@/lib/contact-security";
 
 export const runtime = "nodejs";
 
 // Sanitize name for RFC 5322 email header (remove dangerous chars)
 function sanitizeName(name: string): string {
   return name
-    .replace(/[\r\n]/g, "") // Remove newlines (header injection)
+    .replace(/[\x00-\x1f\x7f]/g, "") // Remove header control characters
     .replace(/[<>"]/g, "") // Remove angle brackets and quotes
     .trim()
     .slice(0, 100); // Limit length
@@ -22,14 +24,13 @@ function escapeHtml(value: string): string {
 }
 
 export async function POST(req: Request) {
+  const invalidHeaders = validateContactHeaders(req);
+  if (invalidHeaders) return invalidHeaders;
   let body: unknown;
   try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json(
-      { success: false, error: "Invalid request body" },
-      { status: 400 },
-    );
+    body = JSON.parse(await readContactBody(req));
+  } catch (error) {
+    return contactBodyError(error);
   }
 
   if (!body || typeof body !== "object" || Array.isArray(body)) {
@@ -39,7 +40,12 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, email, message } = body as Record<string, unknown>;
+  const { name, email, message, website } = body as Record<string, unknown>;
+  if (website !== undefined && typeof website !== "string") {
+    return contactError(400, "Invalid request body.");
+  }
+  // Bots filling the hidden field get a harmless success without an email.
+  if (website) return NextResponse.json({ success: true });
   if (
     typeof name !== "string" ||
     typeof email !== "string" ||
@@ -60,6 +66,7 @@ export async function POST(req: Request) {
   if (
     !safeName ||
     !messageText ||
+    /[\x00-\x1f\x7f]/.test(replyTo) ||
     !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(replyTo)
   ) {
     return NextResponse.json(
@@ -77,6 +84,15 @@ export async function POST(req: Request) {
       { success: false, error: "Email service is not configured" },
       { status: 503 },
     );
+  }
+
+  try {
+    const { env } = getCloudflareContext();
+    // Email keys are hashes; addresses/messages are never logged or stored here.
+    const limited = await limitContactDelivery(replyTo, env.CONTACT_EMAIL_LIMITER, env.CONTACT_SITE_LIMITER);
+    if (limited) return limited;
+  } catch {
+    return contactError(503, "Message delivery is temporarily unavailable.");
   }
 
   try {

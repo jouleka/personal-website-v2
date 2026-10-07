@@ -1,5 +1,11 @@
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+import { securityHeaders } from "./security-headers.mjs";
+
+initOpenNextCloudflareForDev();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -7,8 +13,14 @@ const nextConfig = {
 
   async headers() {
     // Development asset URLs are reused; immutable caching hides style updates.
-    if (process.env.NODE_ENV !== "production") return [];
+    const security = {
+      source: "/:path*",
+      headers: Object.entries(securityHeaders(process.env.NODE_ENV !== "production"))
+        .map(([key, value]) => ({ key, value })),
+    };
+    if (process.env.NODE_ENV !== "production") return [security];
     return [
+      security,
       // HTML pages - short cache, revalidate
       {
         source: "/",

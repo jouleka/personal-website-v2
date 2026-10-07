@@ -40,10 +40,15 @@ export default function ContactSection() {
           name: data.get("name"),
           email: data.get("email"),
           message: data.get("message"),
+          website: data.get("website"),
         }),
       });
       const result = await response.json();
-      if (!response.ok || !result.success)
+      if (response.status === 429) {
+        setStatus("A few messages came through at once. Please wait a minute and try again.");
+        return;
+      }
+      if (!response.ok || !result || typeof result !== "object" || !("success" in result) || result.success !== true)
         throw new Error("Delivery unavailable");
       setStatus("Sent. I’ll get back to you soon.");
       form.reset();
@@ -112,6 +117,12 @@ export default function ContactSection() {
             className="contact-form"
             aria-label="Send Jurgen a message"
           >
+            <div hidden aria-hidden="true">
+              <label>
+                Leave this field blank
+                <input name="website" autoComplete="off" tabIndex={-1} />
+              </label>
+            </div>
             <div className="form-row">
               <label>
                 Your name

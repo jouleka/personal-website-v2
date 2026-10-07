@@ -32,7 +32,7 @@ The custom JL monogram combines a curved J, squared L, and terracotta accent. `p
 
 - Next.js 16 and React 19
 - TypeScript
-- Tailwind CSS
+- Tailwind CSS 4
 - Framer Motion, Lenis, CSS 3D transforms, and native disclosure controls
 - Resend for the contact form
 - OpenNext for Cloudflare deployment
@@ -53,6 +53,8 @@ Open <http://localhost:3000>. The site renders without contact-form credentials;
 
 ```bash
 npm run lint
+npm run test:security
+npm audit
 npm run build
 ```
 
@@ -62,6 +64,41 @@ Production runs as an OpenNext Cloudflare Worker on `jurgenleka.com` and
 `www.jurgenleka.com`. The checked-in Wrangler configuration includes the
 Worker entry point, static assets, domain routes, and R2 incremental cache
 binding. Contact-form values stay in Cloudflare secrets and are never committed.
+
+Use Node.js 22.18 or newer. `predev` and `prebuild` generate the Cloudflare
+binding/runtime declarations from `wrangler.toml`; regenerate them with
+`npm run cf:typegen` after changing bindings.
+
+## Security
+
+The custom `worker.mjs` entry point caps contact request bodies at 32 KiB
+while streaming, before OpenNext buffers them, and times out stalled bodies
+after five seconds. Only same-origin JSON POSTs reach the contact handler.
+Other write endpoints are disabled because this portfolio has no Server Actions.
+
+Cloudflare bindings limit contact attempts to five per IP per minute, delivery
+to one per email address per minute, and delivery to ten messages per minute
+across the site. These counters are approximate and **per Cloudflare location**,
+not a global billing quota. Missing or unavailable limiters fail closed. Email
+counter keys are hashes, and message content is not logged. A hidden honeypot
+discards basic automated submissions without sending email.
+
+The Worker and Next config set CSP, anti-framing, MIME-sniffing, referrer,
+permissions, and HTTPS headers; `public/_headers` covers Cloudflare-served
+static assets. CSP allows inline bootstrap scripts and motion styles needed
+by the statically rendered page, so it is not a nonce-based strict CSP.
+
+The pinned Next.js release includes security patches through 16.3.8. Sharp is
+overridden to its patched 0.35.5 release, including Miniflare's exact dependency.
+Tailwind 4 removes its vulnerable legacy glob/watch dependencies. Next's lint
+plugin still uses an unpatched `braces` dependency through `fast-glob`; the
+scoped override in `package.json` replaces just that lint-only glob operation
+with the small `tools/eslint-glob` adapter backed by `tinyglobby`. Its directory
+matching contract is covered by regression tests. Remove the override when
+Next's lint plugin adopts a patched dependency chain.
+
+Recheck the installed lockfile with `npm audit` after dependency changes. Do not
+use `npm audit fix --force` to roll deployment or lint tooling back to old majors.
 
 ```bash
 npm run preview

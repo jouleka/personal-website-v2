@@ -1,8 +1,7 @@
 import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
 
 const config = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{ts,tsx}",
     "./src/components/**/*.{ts,tsx}",
@@ -10,7 +9,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    scrollBehavior: "smooth",
     container: {
       center: true,
       padding: "2rem",
@@ -80,10 +78,6 @@ const config = {
         playfair: ["var(--font-display)", "serif"],
       },
     },
-  },
-  plugins: [tailwindcssAnimate],
-  future: {
-    hoverOnlyWhenSupported: true,
   },
 } satisfies Config;
 
