@@ -1,20 +1,36 @@
 import { Reveal } from "./motion-system";
 const experiences = [
   {
-    company: "myCicero",
-    role: "Frontend Developer",
-    period: "2024 — Present",
+    company: "Falcar (Communicator)",
+    role: "Lead Frontend & Mobile Developer · Remote contract",
+    period: "Mar 2025 — Present",
     detail:
-      "Multi-tenant Angular platforms, shared architecture, and predictable state with NgRx.",
-    tech: "Angular · RxJS · TypeScript",
+      "Led development of Communicator's Ionic app from scratch for iOS and Android, owning platform-specific builds and store releases. Also developed the Angular frontend for workforce attendance, scheduling and employee self-service.",
+    tech: "Angular · Ionic · TypeScript · iOS · Android",
+  },
+  {
+    company: "myCicero",
+    role: "Frontend Developer / Frontend Architecture Lead",
+    period: "Jan 2024 — Oct 2026",
+    detail:
+      "Led frontend architecture for a multi-tenant Angular monorepo, sharing application logic while supporting brand-specific interfaces. Integrated REST APIs and NgRx to keep data and behavior consistent across tenants.",
+    tech: "Angular · RxJS · NgRx · TypeScript · Monorepo",
+  },
+  {
+    company: "Callblitz",
+    role: "JavaScript Developer · Part-time, remote",
+    period: "Mar 2025 — May 2026",
+    detail:
+      "Resolved browser-extension connectivity issues and detected call state in third-party tools such as HubSpot through the DOM. Passed call events to the backend to keep Callblitz's presence display accurate, alongside Angular, Node.js and native macOS / Windows work.",
+    tech: "JavaScript · Angular · Node.js · Swift · C#",
   },
   {
     company: "Gutenberg Technology",
-    role: "Full Stack JavaScript Developer",
-    period: "2022 — 2025",
+    role: "Full Stack JavaScript Developer / Frontend Migration Lead",
+    period: "Mar 2022 — May 2025",
     detail:
-      "Modernizing AngularJS into Angular 15, building e-learning features, and strengthening release testing.",
-    tech: "Angular · React · Node.js · PostgreSQL",
+      "Led frontend modernization across AngularJS and React.js, migrating legacy e-learning functionality to Angular 15. Delivered features across React.js and Angular UI code and Node.js / HapiJS services, with release testing to catch migration regressions.",
+    tech: "React.js · Angular · AngularJS · Node.js · PostgreSQL",
   },
   {
     company: "Keendoo",
@@ -46,8 +62,9 @@ export default function ExpertiseAndWorkSection() {
           </h2>
         </div>
         <p>
-          Enterprise platforms, learning tools, connected systems. Real teams,
-          real deadlines, real users.
+          Six years building enterprise platforms, learning tools and connected
+          systems, with hands-on ownership of frontend architecture and mobile
+          delivery.
         </p>
       </Reveal>
       <Reveal className="experience-list">
@@ -77,7 +94,8 @@ export default function ExpertiseAndWorkSection() {
       <div className="capabilities">
         <span className="eyebrow">The toolkit</span>
         <p>
-          Angular & React <span>/</span> Rails & Python <span>/</span> SwiftUI{" "}
+          React & Next.js <span>/</span> Angular & Ionic <span>/</span> Node.js{" "}
+          <span>/</span> Rails & Python <span>/</span> SwiftUI{" "}
           <span>/</span> Rust <span>/</span> Realtime systems <span>/</span>{" "}
           Testing that catches things
         </p>
