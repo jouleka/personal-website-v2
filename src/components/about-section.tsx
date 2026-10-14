@@ -29,10 +29,11 @@ export default function AboutSection() {
             with “what if?”
           </p>
           <p>
-            I&apos;m Jurgen, a product engineer based in Europe. I work with
-            teams across Europe and the US, mostly in Angular and TypeScript.
-            Outside that, I build iOS apps, release tools, local-first software,
-            and AI experiments.
+            I&apos;m Jurgen, a product engineer based in Europe with six years
+            of experience. I work with teams across Europe and the US in React,
+            Next.js, Angular and Node.js, taking technical ownership of frontend
+            architecture, migrations and mobile releases. Outside that, I build
+            iOS apps, release tools, local-first software and AI experiments.
           </p>
           <p>
             I like clean interfaces, fast feedback, and code that holds up when
@@ -49,7 +50,7 @@ export default function AboutSection() {
           </a>
           <div className="about-facts">
             <div>
-              <strong>5+</strong>
+              <strong>6</strong>
               <span>years shipping</span>
             </div>
             <div>

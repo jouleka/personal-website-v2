@@ -39,11 +39,14 @@ export const metadata: Metadata = {
     default: "Jurgen Leka — Product Engineer & Builder",
   },
   description:
-    "Product engineer building enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems. Creator of MySigner.",
+    "Product engineer with six years of experience in React, Next.js, Angular and mobile development. Technical leadership in frontend architecture, migrations and releases. Creator of MySigner.",
   keywords: [
     "Product Engineer",
     "Full Stack Developer",
     "Angular",
+    "React",
+    "Next.js",
+    "Ionic",
     "TypeScript",
     "Swift",
     "Python",
@@ -69,7 +72,7 @@ export const metadata: Metadata = {
     siteName: "Jurgen Leka",
     title: "Jurgen Leka — Product Engineer & Builder",
     description:
-      "Enterprise web platforms, native iOS apps, developer tools, and carefully bounded AI systems.",
+      "Six years building web and mobile products, with technical ownership of frontend architecture, migrations and releases.",
   },
   twitter: {
     images: ["/social-preview.png?v=jl1"],
