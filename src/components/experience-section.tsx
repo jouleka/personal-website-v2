@@ -1,49 +1,25 @@
 import { Reveal } from "./motion-system";
 const experiences = [
   {
-    company: "Falcar (Communicator)",
-    role: "Lead Frontend & Mobile Developer · Remote contract",
-    period: "Mar 2025 — Present",
+    company: "Moveo",
+    role: "Lead Frontend Developer",
+    period: "Jan 2024 — Present",
     detail:
-      "Led development of Communicator's Ionic app from scratch for iOS and Android, owning platform-specific builds and store releases. Also developed the Angular frontend for workforce attendance, scheduling and employee self-service.",
-    tech: "Angular · Ionic · TypeScript · iOS · Android",
+      "Led frontend architecture for a multi-tenant Angular monorepo, with shared application logic and brand-specific interfaces. Integrated REST APIs and NgRx, built an Ionic app for iOS and Android, and owned store releases. Developed workforce-management features for attendance, scheduling and employee self-service.",
+    tech: "Angular · TypeScript · RxJS · NgRx · Ionic · Monorepo",
   },
   {
-    company: "myCicero",
-    role: "Frontend Developer / Frontend Architecture Lead",
-    period: "Jan 2024 — Oct 2026",
+    company: "Helius",
+    role: "Full Stack Developer / Frontend Migration Lead",
+    period: "Sep 2021 — Mar 2024",
     detail:
-      "Led frontend architecture for a multi-tenant Angular monorepo, sharing application logic while supporting brand-specific interfaces. Integrated REST APIs and NgRx to keep data and behavior consistent across tenants.",
-    tech: "Angular · RxJS · NgRx · TypeScript · Monorepo",
-  },
-  {
-    company: "Callblitz",
-    role: "JavaScript Developer · Part-time, remote",
-    period: "Mar 2025 — May 2026",
-    detail:
-      "Resolved browser-extension connectivity issues and detected call state in third-party tools such as HubSpot through the DOM. Passed call events to the backend to keep Callblitz's presence display accurate, alongside Angular, Node.js and native macOS / Windows work.",
-    tech: "JavaScript · Angular · Node.js · Swift · C#",
-  },
-  {
-    company: "Gutenberg Technology",
-    role: "Full Stack JavaScript Developer / Frontend Migration Lead",
-    period: "Mar 2022 — May 2025",
-    detail:
-      "Led frontend modernization across AngularJS and React.js, migrating legacy e-learning functionality to Angular 15. Delivered features across React.js and Angular UI code and Node.js / HapiJS services, with release testing to catch migration regressions.",
-    tech: "React.js · Angular · AngularJS · Node.js · PostgreSQL",
-  },
-  {
-    company: "Keendoo",
-    role: "Full Stack Developer",
-    period: "2021 — 2022",
-    detail:
-      "Product data management, backend integration, and a more usable mobile experience.",
-    tech: "PolymerJS · Spring Boot · Java",
+      "Modernized an e-learning platform from AngularJS to Angular 15 while maintaining React.js features and Node.js / HapiJS services. Built product data-management features with PolymerJS, Java / Spring Boot and PostgreSQL, improved responsive layouts, and expanded release testing to catch regressions.",
+    tech: "Angular · AngularJS · React.js · PolymerJS · Node.js · HapiJS · Java · Spring Boot · PostgreSQL · RethinkDB",
   },
   {
     company: "Rayonit",
     role: "Full Stack Developer",
-    period: "2021",
+    period: "Jun 2021 — Aug 2021",
     detail:
       "Traffic management software and real-time data from connected sensors.",
     tech: "Angular · Spring Boot · MongoDB",
