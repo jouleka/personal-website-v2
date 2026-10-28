@@ -5,15 +5,15 @@ const experiences = [
     role: "Lead Frontend Developer",
     period: "Jan 2024 — Present",
     detail:
-      "Led frontend architecture for a multi-tenant Angular monorepo, with shared application logic and brand-specific interfaces. Integrated REST APIs and NgRx, built an Ionic app for iOS and Android, and owned store releases. Developed workforce-management features for attendance, scheduling and employee self-service.",
-    tech: "Angular · TypeScript · RxJS · NgRx · Ionic · Monorepo",
+      "Led frontend architecture for a multi-tenant Angular monorepo, structuring shared application logic and configurable interfaces for multiple brands. Introduced NgRx state management and used RxJS with REST integrations to keep UI behavior consistent across tenants. Delivered workforce-management workflows and an Ionic app, owning platform-specific builds, release preparation and store submissions.",
+    tech: "Angular · TypeScript · RxJS · NgRx · Ionic · Monorepo · REST APIs · Webpack",
   },
   {
     company: "Helius",
     role: "Full Stack Developer / Frontend Migration Lead",
     period: "Sep 2021 — Mar 2024",
     detail:
-      "Modernized an e-learning platform from AngularJS to Angular 15 while maintaining React.js features and Node.js / HapiJS services. Built product data-management features with PolymerJS, Java / Spring Boot and PostgreSQL, improved responsive layouts, and expanded release testing to catch regressions.",
+      "Led an AngularJS-to-Angular 15 migration while maintaining React.js features and Node.js / HapiJS services. Built responsive product data-management features with PolymerJS, Java / Spring Boot and PostgreSQL. Expanded regression testing to catch release issues, and mentored interns through onboarding, ticket breakdown and technical support.",
     tech: "Angular · AngularJS · React.js · PolymerJS · Node.js · HapiJS · Java · Spring Boot · PostgreSQL · RethinkDB",
   },
   {
@@ -39,8 +39,8 @@ export default function ExpertiseAndWorkSection() {
         </div>
         <p>
           Six years building enterprise platforms, learning tools and connected
-          systems, with hands-on ownership of frontend architecture and mobile
-          delivery.
+          systems, with hands-on ownership of frontend architecture, migrations,
+          regression testing and release delivery.
         </p>
       </Reveal>
       <Reveal className="experience-list">

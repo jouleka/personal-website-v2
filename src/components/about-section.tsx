@@ -32,7 +32,7 @@ export default function AboutSection() {
             I&apos;m Jurgen, a product engineer based in Europe with six years
             of experience. I work with teams across Europe and the US in React,
             Next.js, Angular and Node.js, taking technical ownership of frontend
-            architecture, migrations and mobile releases. Outside that, I build
+            architecture, migrations and production releases. Outside that, I build
             iOS apps, release tools, local-first software and AI experiments.
           </p>
           <p>
