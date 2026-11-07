@@ -18,9 +18,15 @@ const nextConfig = {
       headers: Object.entries(securityHeaders(process.env.NODE_ENV !== "production"))
         .map(([key, value]) => ({ key, value })),
     };
-    if (process.env.NODE_ENV !== "production") return [security];
+    const trackingTest = {
+      source: "/buzzfetti-test/:path*",
+      headers: Object.entries(securityHeaders(process.env.NODE_ENV !== "production", true))
+        .map(([key, value]) => ({ key, value })),
+    };
+    if (process.env.NODE_ENV !== "production") return [security, trackingTest];
     return [
       security,
+      trackingTest,
       // HTML pages - short cache, revalidate
       {
         source: "/",

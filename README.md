@@ -51,6 +51,11 @@ Open <http://localhost:3000>. The site renders without contact-form credentials;
 
 ## Verification
 
+`/buzzfetti-test` and `/buzzfetti-test/thanks` are unlisted, noindex pages for
+testing consented Buzzfetti visits and a synthetic page goal. Only these pages
+load Buzzfetti and allow its exact origin in CSP. The Minilytics gateway skips
+injection on these test pages; normal portfolio tracking stays unchanged.
+
 ```bash
 npm run lint
 npm run test:security
