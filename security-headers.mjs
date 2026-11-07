@@ -7,7 +7,7 @@ export function securityHeaders(development = false, buzzfettiTest = false) {
   // Restrict their origins without requiring dynamic rendering of the portfolio.
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'unsafe-inline'${development ? " 'unsafe-eval'" : ""}${buzzfettiTest ? " https://buzzfetti.torotoro.uk" : ""}`,
+    `script-src 'self' 'unsafe-inline'${development ? " 'unsafe-eval'" : ""}${buzzfettiTest ? " https://buzzfetti.torotoro.uk" : ""}${!development && !buzzfettiTest ? " https://static.cloudflareinsights.com" : ""}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
