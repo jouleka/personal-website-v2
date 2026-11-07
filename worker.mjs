@@ -1,6 +1,6 @@
 import nextWorker from "./.open-next/worker.js";
 import { guardContactRequest, isContactPath } from "./src/lib/contact-security.ts";
-import { securityHeaders } from "./security-headers.mjs";
+import { isBuzzfettiTestPath, securityHeaders } from "./security-headers.mjs";
 
 /** @type {ExportedHandler<CloudflareEnv>} */
 const worker = {
@@ -19,7 +19,8 @@ const worker = {
       response = await nextWorker.fetch(request, env, ctx);
     }
     const headers = new Headers(response.headers);
-    for (const [name, value] of Object.entries(securityHeaders())) headers.set(name, value);
+    const trackingTest = isBuzzfettiTestPath(new URL(request.url).pathname);
+    for (const [name, value] of Object.entries(securityHeaders(false, trackingTest))) headers.set(name, value);
     headers.delete("X-Powered-By");
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
   },
