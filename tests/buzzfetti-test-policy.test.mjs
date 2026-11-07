@@ -6,11 +6,15 @@ test("production permits the configured Cloudflare beacon with same-origin colle
   const rules = securityHeaders()["Content-Security-Policy"].split("; ");
   const scripts = rules.find((rule) => rule.startsWith("script-src "));
   const connections = rules.find((rule) => rule.startsWith("connect-src "));
-  assert.ok(scripts.split(" ").includes("https://static.cloudflareinsights.com"));
-  assert.ok(!scripts.includes("*.cloudflareinsights.com"));
+  assert.deepEqual(scripts.split(" "), [
+    "script-src", "'self'", "'unsafe-inline'", "https://static.cloudflareinsights.com",
+  ]);
   assert.equal(connections, "connect-src 'self'");
-  for (const csp of [securityHeaders(true), securityHeaders(false, true)]) {
-    assert.ok(!csp["Content-Security-Policy"].includes("cloudflareinsights.com"));
+  for (const [csp, expected] of [
+    [securityHeaders(true), "script-src 'self' 'unsafe-inline' 'unsafe-eval'"],
+    [securityHeaders(false, true), "script-src 'self' 'unsafe-inline' https://buzzfetti.torotoro.uk"],
+  ]) {
+    assert.equal(csp["Content-Security-Policy"].split("; ").find((rule) => rule.startsWith("script-src ")), expected);
   }
 });
 
