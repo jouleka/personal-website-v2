@@ -13,8 +13,8 @@ const experiences = [
     role: "Full Stack Developer / Frontend Migration Lead",
     period: "Sep 2021 — Mar 2024",
     detail:
-      "Led an AngularJS-to-Angular 15 migration while maintaining React.js features and Node.js / HapiJS services. Built responsive product data-management features with PolymerJS, Java / Spring Boot and PostgreSQL. Expanded regression testing to catch release issues, and mentored interns through onboarding, ticket breakdown and technical support.",
-    tech: "Angular · AngularJS · React.js · PolymerJS · Node.js · HapiJS · Java · Spring Boot · PostgreSQL · RethinkDB",
+      "Led an AngularJS-to-Angular 15 migration while maintaining React.js features and Node.js / HapiJS services. Built responsive product data-management features with Vue.js, Java / Spring Boot and PostgreSQL. Expanded regression testing to catch release issues, and mentored interns through onboarding, ticket breakdown and technical support.",
+    tech: "Angular · AngularJS · React.js · Vue.js · Node.js · HapiJS · Java · Spring Boot · PostgreSQL · RethinkDB",
   },
   {
     company: "Rayonit",
