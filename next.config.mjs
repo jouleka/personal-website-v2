@@ -8,7 +8,9 @@ const nextConfig = {
   poweredByHeader: false,
   // Compiler optimizations
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    // Keep console.error so delivery failures stay visible in Worker logs.
+    removeConsole:
+      process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
 
   async headers() {
