@@ -14,6 +14,19 @@ function sanitizeName(name: string): string {
     .slice(0, 100); // Limit length
 }
 
+// Resend's error text can include addresses (e.g. "only send testing emails
+// to your own email address (x@y.z)"), so strip them before logging.
+function redact(text: unknown): string {
+  return String(text ?? "").replace(/[^\s@<>()"']+@[^\s@<>()"']+/g, "[email]").slice(0, 300);
+}
+
+function logDeliveryFailure(stage: string, error: unknown) {
+  const e = (error ?? {}) as { name?: unknown; message?: unknown; statusCode?: unknown };
+  console.error(
+    `Contact email ${stage}: ${redact(e.name)} (${redact(e.statusCode ?? "no status")}): ${redact(e.message)}`,
+  );
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -80,6 +93,9 @@ export async function POST(req: Request) {
   const toEmail = process.env.EMAIL_TO;
 
   if (!apiKey || !fromEmail || !toEmail) {
+    console.error(
+      `Contact email not configured: missing ${[!apiKey && "RESEND_API_KEY", !fromEmail && "RESEND_FROM_EMAIL", !toEmail && "EMAIL_TO"].filter(Boolean).join(", ")}`,
+    );
     return NextResponse.json(
       { success: false, error: "Email service is not configured" },
       { status: 503 },
@@ -91,7 +107,8 @@ export async function POST(req: Request) {
     // Email keys are hashes; addresses/messages are never logged or stored here.
     const limited = await limitContactDelivery(replyTo, env.CONTACT_EMAIL_LIMITER, env.CONTACT_SITE_LIMITER);
     if (limited) return limited;
-  } catch {
+  } catch (error) {
+    logDeliveryFailure("rate limiter failed", error);
     return contactError(503, "Message delivery is temporarily unavailable.");
   }
 
@@ -109,6 +126,7 @@ export async function POST(req: Request) {
     });
 
     if (error) {
+      logDeliveryFailure("rejected by Resend", error);
       return NextResponse.json(
         { success: false, error: "Failed to send email" },
         { status: 500 },
@@ -116,7 +134,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    logDeliveryFailure("request to Resend failed", error);
     return NextResponse.json(
       { success: false, error: "Failed to send email" },
       { status: 500 },
