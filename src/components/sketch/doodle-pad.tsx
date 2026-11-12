@@ -4,9 +4,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Eraser, Pencil, Undo2, X } from "lucide-react";
 
-type Point = { x: number; y: number; p: number };
-type Stroke = { color: string; points: Point[] };
+type Point = { x: number; y: number };
+type Stroke = {
+  color: string;
+  width: number;
+  points: Point[];
+  group: SVGGElement;
+  segment: SVGPathElement;
+  segmentStart: number;
+  hue: number;
+};
 
+const NS = "http://www.w3.org/2000/svg";
 const RAINBOW = "rainbow";
 const COLORS = [
   { name: "Ink", value: "#1c1a2e" },
@@ -19,81 +28,72 @@ const COLORS = [
 
 const HINT_KEY = "jl-doodle-hint-seen";
 
-// Strokes live in document coordinates so they scroll with the page,
-// while the canvas itself stays viewport-sized (cheap on long pages).
+/** Smooth path through points: quadratic curves via segment midpoints. */
+function smooth(pts: Point[]) {
+  if (pts.length === 1) return `M${pts[0].x} ${pts[0].y} l0.01 0`;
+  let d = `M${pts[0].x} ${pts[0].y}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const mx = (pts[i].x + pts[i + 1].x) / 2;
+    const my = (pts[i].y + pts[i + 1].y) / 2;
+    d += ` Q${pts[i].x} ${pts[i].y} ${mx} ${my}`;
+  }
+  const last = pts[pts.length - 1];
+  return `${d} L${last.x} ${last.y}`;
+}
+
+// Drawings are SVG paths on a layer that covers the whole document, so the
+// browser scrolls them together with the page. (A viewport canvas repainted
+// on scroll lags and jumps on iOS Safari, which scrolls off the main thread
+// and resizes the viewport as its toolbar collapses.)
 export default function DoodlePad() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const layerRef = useRef<SVGSVGElement>(null);
   const strokes = useRef<Stroke[]>([]);
   const current = useRef<Stroke | null>(null);
-  const frame = useRef(0);
   const [active, setActive] = useState(false);
   const [color, setColor] = useState(COLORS[1].value);
   const [count, setCount] = useState(0);
   const [callout, setCallout] = useState(false);
 
-  const render = useCallback(() => {
-    frame.current = 0;
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.setTransform(dpr, 0, 0, dpr, -window.scrollX * dpr, -window.scrollY * dpr);
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    for (const stroke of strokes.current) {
-      const pts = stroke.points;
-      const rainbow = stroke.color === RAINBOW;
-      const paint = (i: number) => (rainbow ? `hsl(${(i * 7) % 360} 90% 58%)` : stroke.color);
-      if (pts.length === 1) {
-        ctx.fillStyle = paint(0);
-        ctx.beginPath();
-        ctx.arc(pts[0].x, pts[0].y, 3.5, 0, Math.PI * 2);
-        ctx.fill();
-        continue;
-      }
-      for (let i = 1; i < pts.length; i++) {
-        const a = pts[i - 1];
-        const b = pts[i];
-        const prev = pts[i - 2] ?? a;
-        ctx.strokeStyle = paint(i);
-        ctx.lineWidth = (rainbow ? 7 : 3.5) + b.p * 4;
-        ctx.beginPath();
-        ctx.moveTo((prev.x + a.x) / 2, (prev.y + a.y) / 2);
-        ctx.quadraticCurveTo(a.x, a.y, (a.x + b.x) / 2, (a.y + b.y) / 2);
-        ctx.stroke();
-      }
-    }
+  // Keep the layer as tall as the page content.
+  useEffect(() => {
+    const layer = layerRef.current;
+    if (!layer) return;
+    const fit = () => {
+      layer.style.height = `${document.body.offsetHeight}px`;
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(document.body);
+    return () => ro.disconnect();
   }, []);
 
-  const schedule = useCallback(() => {
-    if (!frame.current) frame.current = requestAnimationFrame(render);
-  }, [render]);
+  const newSegment = (stroke: Stroke) => {
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("stroke", stroke.color === RAINBOW ? `hsl(${stroke.hue} 90% 58%)` : stroke.color);
+    path.setAttribute("stroke-width", String(stroke.width));
+    stroke.group.appendChild(path);
+    stroke.segment = path;
+    stroke.segmentStart = Math.max(0, stroke.points.length - 1);
+  };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      schedule();
-    };
-    resize();
-    window.addEventListener("resize", resize);
-    window.addEventListener("scroll", schedule, { passive: true });
-    return () => {
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("scroll", schedule);
-      cancelAnimationFrame(frame.current);
-      // Without this reset a remount would think a frame is still pending
-      // and never paint again.
-      frame.current = 0;
-    };
-  }, [schedule]);
+  const paint = (stroke: Stroke) => {
+    if (stroke.color === RAINBOW && stroke.points.length - stroke.segmentStart > 6) {
+      stroke.hue = (stroke.hue + 26) % 360;
+      newSegment(stroke);
+    }
+    stroke.segment.setAttribute("d", smooth(stroke.points.slice(stroke.segmentStart)));
+  };
+
+  const removeLast = useCallback(() => {
+    strokes.current.pop()?.group.remove();
+    setCount(strokes.current.length);
+  }, []);
+
+  const clearAll = () => {
+    strokes.current.forEach((s) => s.group.remove());
+    strokes.current = [];
+    setCount(0);
+  };
 
   // First-time visitors get a little nudge that the page is drawable.
   useEffect(() => {
@@ -120,50 +120,55 @@ export default function DoodlePad() {
       if (e.key === "Escape") setActive(false);
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "z") {
         e.preventDefault();
-        strokes.current.pop();
-        setCount(strokes.current.length);
-        schedule();
+        removeLast();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [active, schedule]);
-
-  const point = (e: React.PointerEvent): Point => ({
-    x: e.clientX + window.scrollX,
-    y: e.clientY + window.scrollY,
-    p: e.pointerType === "pen" ? e.pressure : 0.35,
-  });
-
-  const undo = () => {
-    strokes.current.pop();
-    setCount(strokes.current.length);
-    schedule();
-  };
+  }, [active, removeLast]);
 
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        className={`doodle-canvas${active ? " is-active" : ""}`}
+      <svg
+        ref={layerRef}
+        className={`doodle-layer${active ? " is-active" : ""}`}
         aria-hidden="true"
         onPointerDown={(e) => {
-          if (!active) return;
+          const layer = layerRef.current;
+          if (!active || !layer) return;
           e.currentTarget.setPointerCapture(e.pointerId);
-          current.current = { color, points: [point(e)] };
-          strokes.current.push(current.current);
-          schedule();
+          const group = document.createElementNS(NS, "g");
+          layer.appendChild(group);
+          const width = color === RAINBOW ? 8 : e.pointerType === "pen" ? 2.5 + e.pressure * 4 : 4.5;
+          const stroke: Stroke = {
+            color,
+            width,
+            points: [{ x: e.pageX, y: e.pageY }],
+            group,
+            segment: document.createElementNS(NS, "path"),
+            segmentStart: 0,
+            hue: 0,
+          };
+          newSegment(stroke);
+          paint(stroke);
+          strokes.current.push(stroke);
+          current.current = stroke;
         }}
         onPointerMove={(e) => {
-          if (!current.current) return;
-          current.current.points.push(point(e));
-          schedule();
+          const stroke = current.current;
+          if (!stroke) return;
+          const events = e.nativeEvent.getCoalescedEvents?.() ?? [e.nativeEvent];
+          for (const ev of events.length ? events : [e.nativeEvent]) {
+            stroke.points.push({ x: ev.pageX, y: ev.pageY });
+          }
+          paint(stroke);
         }}
         onPointerUp={() => {
           if (current.current) setCount(strokes.current.length);
           current.current = null;
         }}
         onPointerCancel={() => {
+          if (current.current) setCount(strokes.current.length);
           current.current = null;
         }}
       />
@@ -213,17 +218,13 @@ export default function DoodlePad() {
                   aria-pressed={c.value === color}
                 />
               ))}
-              <button type="button" className="doodle-tools__btn" onClick={undo} aria-label="Undo last line" disabled={count === 0}>
+              <button type="button" className="doodle-tools__btn" onClick={removeLast} aria-label="Undo last line" disabled={count === 0}>
                 <Undo2 size={18} />
               </button>
               <button
                 type="button"
                 className="doodle-tools__btn"
-                onClick={() => {
-                  strokes.current = [];
-                  setCount(0);
-                  schedule();
-                }}
+                onClick={clearAll}
                 aria-label="Erase all drawings"
                 disabled={count === 0}
               >
