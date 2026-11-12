@@ -3,17 +3,17 @@
   "short_name": "JL",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png?v=jl1",
+      "src": "/android-chrome-192x192.png?v=jl2",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png?v=jl1",
+      "src": "/android-chrome-512x512.png?v=jl2",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "theme_color": "#eeece2",
-  "background_color": "#eeece2",
+  "theme_color": "#f7f1e3",
+  "background_color": "#f7f1e3",
   "display": "standalone"
 }

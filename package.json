@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.18.0" },
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "brand:generate": "node scripts/generate-brand-assets.mjs",
     "dev": "next dev",
@@ -41,6 +43,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "fast-glob": "file:tools/eslint-glob",
+    "fontkit": "^2.0.4",
     "postcss": "^8.5.14",
     "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",

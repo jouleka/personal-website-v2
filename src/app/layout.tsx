@@ -1,28 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Instrument_Serif, DM_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Caveat, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import "lenis/dist/lenis.css";
-import "./editorial-motion.css";
 
-const sans = DM_Sans({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-sans",
   display: "swap",
-  preload: true,
+  variable: "--font-display",
   fallback: ["system-ui", "sans-serif"],
 });
 
-const serif = Instrument_Serif({
+const hand = Caveat({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+  weight: ["500", "700"],
   display: "swap",
-  variable: "--font-display",
+  variable: "--font-hand",
+  fallback: ["cursive"],
 });
 
-const mono = DM_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "600"],
   display: "swap",
   variable: "--font-mono",
 });
@@ -30,18 +28,18 @@ const mono = DM_Mono({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#eeece2",
+  themeColor: "#f7f1e3",
 };
 
 export const metadata: Metadata = {
   title: {
     template: "%s | Jurgen Leka",
-    default: "Jurgen Leka — Product Engineer & Builder",
+    default: "Jurgen Leka — Software Engineer & Builder",
   },
   description:
-    "Product engineer with six years of experience in React, Next.js, Angular and mobile development. Technical leadership in frontend architecture, migrations and releases. Creator of MySigner.",
+    "Software engineer with six years of shipping web, mobile and developer tools in React, Next.js, Angular and Swift. Owner of frontend architecture, migrations and release days. Maker of MySigner and too many side projects.",
   keywords: [
-    "Product Engineer",
+    "Software Engineer",
     "Full Stack Developer",
     "Angular",
     "React",
@@ -61,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/social-preview.png?v=jl1",
+        url: "/social-preview.png?v=jl2",
         width: 1200,
         height: 630,
         alt: "Jurgen Leka — Code. Ship. Repeat.",
@@ -70,12 +68,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Jurgen Leka",
-    title: "Jurgen Leka — Product Engineer & Builder",
+    title: "Jurgen Leka — Software Engineer & Builder",
     description:
-      "Six years building web and mobile products, with technical ownership of frontend architecture, migrations and releases.",
+      "Six years of turning coffee into web apps, mobile apps and dev tools. Come play with the shipping machine.",
   },
   twitter: {
-    images: ["/social-preview.png?v=jl1"],
+    images: ["/social-preview.png?v=jl2"],
     card: "summary_large_image",
     creator: "@jou_leka",
   },
@@ -85,13 +83,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg?v=jl1", type: "image/svg+xml" },
-      { url: "/favicon-32x32.png?v=jl1", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.ico?v=jl1", sizes: "48x48" },
+      { url: "/favicon.svg?v=jl2", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png?v=jl2", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico?v=jl2", sizes: "48x48" },
     ],
-    apple: "/apple-touch-icon.png?v=jl1",
+    apple: "/apple-touch-icon.png?v=jl2",
   },
-  manifest: "/site.webmanifest?v=jl1",
+  manifest: "/site.webmanifest?v=jl2",
 };
 
 export default function RootLayout({
@@ -101,7 +99,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+      <body className={`${display.variable} ${hand.variable} ${mono.variable}`}>
         {children}
       </body>
     </html>

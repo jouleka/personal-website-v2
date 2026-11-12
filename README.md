@@ -1,6 +1,6 @@
 # Jurgen Leka — Portfolio
 
-The source for [jurgenleka.com](https://jurgenleka.com): an editorial portfolio for Jurgen Leka's product engineering work across enterprise web platforms, native iOS, developer tools, and carefully bounded AI systems.
+The source for [jurgenleka.com](https://jurgenleka.com): a playful, hand-drawn portfolio for Jurgen Leka's software engineering work across enterprise web platforms, native iOS, developer tools, and carefully bounded AI systems.
 
 ## What is showcased
 
@@ -16,24 +16,31 @@ The source for [jurgenleka.com](https://jurgenleka.com): an editorial portfolio 
 - **Resume Builder** — a typed, configurable, print-ready CV system
 - **Chat Application** — an early Angular realtime group-messaging product
 
-Four featured projects have original interface studies built directly in React and CSS. All eleven projects remain available in a filterable index with expandable workflow illustrations and repository links. The studies illustrate the products; they are not screenshots or live product interfaces.
+Every project gets a hand-drawn doodle on an index card. The eleven cards form a pile you can drag, throw and flip; an index below brings any project straight to the top.
 
 ## Art direction
 
-Parchment, olive, terracotta, peach, and dusty lilac; oversized DM Sans headlines, Instrument Serif accents, and DM Mono labels. The copy is direct and playful: “Code. Ship. Repeat.”
+**The Sketchbook.** The whole site is a living, hand-drawn notebook: marker colours (sun, tomato, mint, sky, bubblegum, lilac) on dotted paper, thick ink outlines, hard offset shadows and wobbly corners. Clean SVG paths become hand-drawn ink through a shared `feTurbulence` + `feDisplacementMap` filter (`src/components/sketch/sketch-defs.tsx`). Type is Bricolage Grotesque for display and body, Caveat for handwritten notes and JetBrains Mono for labels.
 
-The opening sculpture has 26 CSS planes, a continuous 3D rotation, pointer tilt, and three remixable forms. Masked entrance typography, a looping marquee, scroll parallax, sticky project panels, magnetic links, pointer-following project labels, section reveals, and a curved contact transition give the page a consistent motion language. Lenis smooths desktop wheel scrolling and anchors; touch scrolling stays native. Motion is always enabled, with no switch or stored preference. The public location is Europe.
+Each section has something to play with:
 
-The design draws on [Miranda's paper portfolio](https://www.niccolomiranda.com/), [Dennis Snellenberg's typographic scale](https://dennissnellenberg.com/), [Rauno Freiberg's interaction craft](https://rauno.me/), and [Bruno Simon's sense of play](https://bruno-simon.com/). Layouts, artwork, interface studies, and implementation are original to this portfolio.
+- **Hero:** a shipping machine. Press CODE, SHIP, REPEAT: the laptop writes code, a package is tossed into a rocket, the rocket launches, then lands for the next release. Pressing out of order gets a cheeky reply; launches are tallied.
+- **Work:** a pile of project cards. Drag or swipe to throw the top card, tap to flip it for the key moment, or use the arrow buttons and keyboard.
+- **About:** a "HELLO my name is" badge that greets in other languages, and a browser-tab hoarder that crashes when too many tabs are open.
+- **Journey:** a wiggly road that draws itself as you scroll, and a board of toolkit stickers you can drag around.
+- **Contact:** the form is a letter. Sending it folds it into a paper plane that flies away.
+- **Everywhere:** a pencil button lets visitors draw on the page; strokes stay pinned to the document as you scroll.
 
-The custom JL monogram combines a curved J, squared L, and terracotta accent. `public/logo-mark.svg` is the master vector. Run `npm run brand:generate` to regenerate favicon sizes and the social preview from that source.
+Framer Motion drives the interactions and respects the visitor's reduced-motion setting. Lenis smooths desktop wheel scrolling; touch scrolling stays native, and card dragging is horizontal-only so phones can still scroll past the pile.
+
+The custom JL monogram combines a curved J, squared L, and a tomato accent in the Sketchbook ink. `public/logo-mark.svg` is the master vector. Run `npm run brand:generate` to regenerate favicon sizes and the social preview from that source. The social preview is a Sketchbook-style card drawn in `scripts/social-card.mjs`; its text is converted to outlines with `fontkit` from the site's own OFL fonts in `scripts/fonts/`, so it renders the same on any machine.
 
 ## Stack
 
 - Next.js 16 and React 19
 - TypeScript
 - Tailwind CSS 4
-- Framer Motion, Lenis, CSS 3D transforms, and native disclosure controls
+- Framer Motion, Lenis, SVG filters and a canvas doodle layer
 - Resend for the contact form
 - OpenNext for Cloudflare deployment
 
