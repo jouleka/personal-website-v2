@@ -1885,16 +1885,27 @@ main {
 }
 
 /* ── doodle pad ────────────────────────────────────────────── */
-.doodle-canvas {
-  position: fixed;
-  inset: 0;
+.doodle-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 60;
+  width: 100%;
+  overflow: visible;
   pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.doodle-canvas.is-active {
+.doodle-layer.is-active {
   pointer-events: auto;
   cursor: crosshair;
   touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.doodle-layer path {
+  pointer-events: none;
 }
 .doodle-dock {
   position: fixed;
@@ -2042,7 +2053,7 @@ main {
 }
 
 /* ── doodle mode extras ────────────────────────────────────── */
-.doodle-canvas.is-active {
+.doodle-layer.is-active {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 28 L7 19 L22 4 L28 10 L13 25 Z' fill='%23ffd23f' stroke='%231c1a2e' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M4 28 L7 19 L13 25 Z' fill='%23f4d6b0' stroke='%231c1a2e' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M4 28 L5.5 23.5 L8.5 26.5 Z' fill='%231c1a2e'/%3E%3Cpath d='M19 7 L25 13' stroke='%231c1a2e' stroke-width='2'/%3E%3C/svg%3E") 3 29, crosshair;
 }
 .doodle-banner {
