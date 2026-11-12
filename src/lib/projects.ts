@@ -1,18 +1,32 @@
-import {
-  AichuArtifact,
-  ChatArtifact,
-  GoldengoArtifact,
-  GreatWallArtifact,
-  MySignerArtifact,
-  OopsFeeArtifact,
-  OptionsArtifact,
-  PolymarketArtifact,
-  ReadingArtifact,
-  ResumeArtifact,
-  SubtitleArtifact,
-} from "@/components/project-artifacts";
+export type DoodleKey =
+  | "mysigner"
+  | "aichu"
+  | "subtitle"
+  | "reading"
+  | "goldengo"
+  | "oopsfee"
+  | "options"
+  | "polymarket"
+  | "greatwall"
+  | "resume"
+  | "chat";
 
-export const projects = [
+export type Project = {
+  name: string;
+  eyebrow: string;
+  audience: string;
+  description: string;
+  moment: string;
+  tags: string[];
+  url: string;
+  sourceUrl?: string;
+  secondaryUrl?: string;
+  secondaryLabel?: string;
+  doodle: DoodleKey;
+  color: "sun" | "bubble" | "mint" | "sky" | "tomato" | "lilac";
+};
+
+export const projects: Project[] = [
   {
     name: "MySigner",
     eyebrow: "Mobile delivery / Rails + Ruby",
@@ -24,7 +38,8 @@ export const projects = [
     tags: ["Rails 8", "Hotwire", "PostgreSQL", "Ruby CLI"],
     url: "https://mysigner.dev",
     sourceUrl: "https://github.com/jouleka/my-signer",
-    artifact: MySignerArtifact,
+    doodle: "mysigner",
+    color: "sun",
   },
   {
     name: "Aichu",
@@ -36,7 +51,8 @@ export const projects = [
       "Paste a log containing a credential. The provider receives a placeholder; the original value stays on your machine.",
     tags: ["Rust", "MITM Proxy", "SSE", "Local first"],
     url: "https://github.com/jouleka/aichu",
-    artifact: AichuArtifact,
+    doodle: "aichu",
+    color: "bubble",
   },
   {
     name: "Subtitle.fm",
@@ -48,7 +64,8 @@ export const projects = [
       "Generate the first draft, tighten every cue against the waveform, review together, and publish from one workspace.",
     tags: ["SvelteKit", "Bun", "Python", "Yjs"],
     url: "https://github.com/jouleka/subtitle-fm",
-    artifact: SubtitleArtifact,
+    doodle: "subtitle",
+    color: "mint",
   },
   {
     name: "Reading Companion",
@@ -60,7 +77,8 @@ export const projects = [
       "Ask who someone is in chapter 12 and get the useful context—without facts revealed in chapter 13.",
     tags: ["React", "FastAPI", "SQLite", "PWA"],
     url: "https://github.com/jouleka/reading-companion",
-    artifact: ReadingArtifact,
+    doodle: "reading",
+    color: "sky",
   },
   {
     name: "Goldengo",
@@ -72,7 +90,8 @@ export const projects = [
       "Import a bank statement locally, resolve duplicates, then capture the next expense from Siri, the Action Button, or a widget.",
     tags: ["SwiftUI", "SwiftData", "CloudKit", "500+ tests"],
     url: "https://github.com/jouleka/goldengo",
-    artifact: GoldengoArtifact,
+    doodle: "goldengo",
+    color: "sun",
   },
   {
     name: "OopsFee",
@@ -84,7 +103,8 @@ export const projects = [
       "Pick the promise, deadline, evidence, and verifier. Friends can sponsor, encourage, or roast you while your streak is on the line.",
     tags: ["React Native", "Expo", "Supabase", "Stripe"],
     url: "https://github.com/jouleka/Oops-fee",
-    artifact: OopsFeeArtifact,
+    doodle: "oopsfee",
+    color: "tomato",
   },
   {
     name: "OptionsBot",
@@ -96,7 +116,8 @@ export const projects = [
       "Scan the chain, rank a defined-risk setup, then reject or route it only after freshness, liquidity, sizing, heat, and paper-account checks.",
     tags: ["Python", "IBKR", "SQLite", "Paper only"],
     url: "https://github.com/jouleka/optionsbot",
-    artifact: OptionsArtifact,
+    doodle: "options",
+    color: "mint",
   },
   {
     name: "Polymarket Bot",
@@ -108,7 +129,8 @@ export const projects = [
       "The reasoning layer suggests a trade. The ERS independently reconstructs the evidence before the paper harness records anything.",
     tags: ["Python", "Risk Engine", "Agents", "Paper only"],
     url: "https://github.com/jouleka/polymarket-bot",
-    artifact: PolymarketArtifact,
+    doodle: "polymarket",
+    color: "lilac",
   },
   {
     name: "Great Wall of Ideas",
@@ -121,7 +143,8 @@ export const projects = [
     tags: ["Next.js", "Supabase", "Realtime", "RLS"],
     url: "https://www.greatwallofideas.com",
     sourceUrl: "https://github.com/jouleka/great-wall-of-ideas",
-    artifact: GreatWallArtifact,
+    doodle: "greatwall",
+    color: "bubble",
   },
   {
     name: "Resume Builder",
@@ -135,7 +158,8 @@ export const projects = [
     url: "https://github.com/jouleka/cv-template",
     secondaryUrl: "/resume.pdf",
     secondaryLabel: "Open resume",
-    artifact: ResumeArtifact,
+    doodle: "resume",
+    color: "sky",
   },
   {
     name: "Chat Application",
@@ -147,6 +171,7 @@ export const projects = [
       "Register, find a group, and move between direct and group conversations while messages arrive over the realtime connection.",
     tags: ["Angular", "Material", "STOMP", "SockJS"],
     url: "https://github.com/jouleka/Chat-Application",
-    artifact: ChatArtifact,
+    doodle: "chat",
+    color: "sun",
   },
 ];
