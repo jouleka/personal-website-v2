@@ -76,6 +76,10 @@ Production runs as an OpenNext Cloudflare Worker on `jurgenleka.com` and
 `www.jurgenleka.com`. The checked-in Wrangler configuration includes the
 Worker entry point, static assets, domain routes, and R2 incremental cache
 binding. Contact-form values stay in Cloudflare secrets and are never committed.
+`wrangler.toml` lists the required secrets (`RESEND_API_KEY`,
+`RESEND_FROM_EMAIL`, `EMAIL_TO`, `TURNSTILE_SECRET_KEY`), so a deploy fails if
+one is not set. Set the Turnstile secret with
+`npx wrangler secret put TURNSTILE_SECRET_KEY`.
 
 Use Node.js 22.18 or newer. `predev` and `prebuild` generate the Cloudflare
 binding/runtime declarations from `wrangler.toml`; regenerate them with
@@ -94,6 +98,17 @@ across the site. These counters are approximate and **per Cloudflare location**,
 not a global billing quota. Missing or unavailable limiters fail closed. Email
 counter keys are hashes, and message content is not logged. A hidden honeypot
 discards basic automated submissions without sending email.
+
+The contact form also requires a Cloudflare Turnstile token (managed mode).
+`/api/send-email` verifies it with Siteverify, passing `CF-Connecting-IP`,
+before any email work, and rejects missing tokens (400) and invalid, expired,
+reused, or wrong-action tokens (403). Verification fails closed (503) when the
+`TURNSTILE_SECRET_KEY` Worker secret is missing or Siteverify is unreachable,
+and Cloudflare's dummy test secrets are refused outside localhost. The public
+sitekey comes from `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, defaulting to the
+production key in production builds and Cloudflare's always-pass test key in
+development. CSP allows `https://challenges.cloudflare.com` in `script-src`
+and `frame-src` for the widget.
 
 The Worker and Next config set CSP, anti-framing, MIME-sniffing, referrer,
 permissions, and HTTPS headers; `public/_headers` covers Cloudflare-served

@@ -2,15 +2,19 @@ export function isBuzzfettiTestPath(pathname) {
   return pathname === "/buzzfetti-test" || pathname.startsWith("/buzzfetti-test/");
 }
 
+const TURNSTILE_ORIGIN = "https://challenges.cloudflare.com";
+
 export function securityHeaders(development = false, buzzfettiTest = false) {
   // Next's static RSC bootstrap needs inline scripts, and motion uses inline CSS.
   // Restrict their origins without requiring dynamic rendering of the portfolio.
   const csp = [
     "default-src 'self'",
-    `script-src 'self' 'unsafe-inline'${development ? " 'unsafe-eval'" : ""}${buzzfettiTest ? " https://buzzfetti.torotoro.uk" : ""}${!development && !buzzfettiTest ? " https://static.cloudflareinsights.com" : ""}`,
+    `script-src 'self' 'unsafe-inline'${development ? " 'unsafe-eval'" : ""}${buzzfettiTest ? " https://buzzfetti.torotoro.uk" : ""}${!development && !buzzfettiTest ? " https://static.cloudflareinsights.com" : ""} ${TURNSTILE_ORIGIN}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
+    // The contact form's Turnstile widget runs in a Cloudflare iframe.
+    `frame-src ${TURNSTILE_ORIGIN}`,
     `connect-src 'self'${development ? " ws: wss:" : ""}${buzzfettiTest ? " https://buzzfetti.torotoro.uk" : ""}`,
     "object-src 'none'",
     "base-uri 'self'",

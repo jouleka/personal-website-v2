@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Check, Copy, Send } from "lucide-react";
 import { Circled, Eyebrow, Reveal } from "./ink";
+import Turnstile, { type TurnstileHandle } from "./turnstile";
 
 const EMAIL = "lekacoding@gmail.com";
 
@@ -23,6 +24,8 @@ export default function Contact() {
   const [status, setStatus] = useState("");
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
+  const [token, setToken] = useState<string | null>(null);
+  const turnstile = useRef<TurnstileHandle>(null);
 
   async function copyEmail() {
     try {
@@ -38,6 +41,10 @@ export default function Contact() {
   async function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (!token) {
+      setStatus("Give the quick human check below a moment, then send again.");
+      return;
+    }
     setStage("sending");
     setStatus("");
     try {
@@ -49,11 +56,19 @@ export default function Contact() {
           email: data.get("email"),
           message: data.get("message"),
           website: data.get("website"),
+          turnstileToken: token,
         }),
       });
+      // Tokens are single-use: get a fresh one whatever happens next.
+      turnstile.current?.reset();
       const result = await response.json();
       if (response.status === 429) {
         setStatus("A few messages came through at once. Please wait a minute and try again.");
+        setStage("writing");
+        return;
+      }
+      if (response.status === 403) {
+        setStatus("The human check didn't go through. Give it a moment to refresh, then send again.");
         setStage("writing");
         return;
       }
@@ -62,6 +77,7 @@ export default function Contact() {
       setStage("flying");
       window.setTimeout(() => setStage("sent"), 1700);
     } catch {
+      turnstile.current?.reset();
       setStatus("Email delivery is unavailable right now. Your message is still here, so please email me directly.");
       setStage("writing");
     }
@@ -163,6 +179,15 @@ export default function Contact() {
                     />
                   </label>
                 </div>
+                <Turnstile
+                  ref={turnstile}
+                  action="contact"
+                  className="letter__check"
+                  onToken={setToken}
+                  onError={() =>
+                    setStatus("The human check couldn't load. Try refreshing the page, or email me directly.")
+                  }
+                />
                 <div className="letter__foot">
                   <p className="letter__status" role="status">
                     {status || "Straight to my inbox. No newsletters, promise."}
