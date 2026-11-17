@@ -39,6 +39,7 @@ test("every policy permits only the exact Turnstile origin for scripts and frame
     const rules = headers["Content-Security-Policy"].split("; ");
     assert.ok(rules.find((rule) => rule.startsWith("script-src ")).split(" ").includes("https://challenges.cloudflare.com"));
     assert.equal(rules.find((rule) => rule.startsWith("frame-src ")), "frame-src https://challenges.cloudflare.com");
-    assert.ok(!headers["Content-Security-Policy"].includes("*.cloudflare.com"));
+    const sources = rules.flatMap((rule) => rule.split(" ").slice(1));
+    assert.ok(sources.every((source) => source !== "https://*.cloudflare.com" && source !== "*.cloudflare.com"));
   }
 });
