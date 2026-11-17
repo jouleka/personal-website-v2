@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Buzzfetti tracking test",
+  description: "An unlisted page for testing consented Buzzfetti analytics on Jurgen Leka's portfolio.",
+  path: "/buzzfetti-test",
+});
+
 export default function TrackingTestPage() {
   return (
     <>

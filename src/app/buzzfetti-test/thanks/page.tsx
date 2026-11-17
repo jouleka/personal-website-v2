@@ -1,3 +1,13 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Buzzfetti test visit completed",
+  description: "The goal page for the unlisted Buzzfetti analytics test on Jurgen Leka's portfolio.",
+  path: "/buzzfetti-test/thanks",
+});
+
 export default function TrackingTestCompletePage() {
   return (
     <>
@@ -8,5 +18,3 @@ export default function TrackingTestCompletePage() {
     </>
   );
 }
-import Link from "next/link";
-

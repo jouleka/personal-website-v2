@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { contactBodyError, contactError, limitContactDelivery, readContactBody, validateContactHeaders } from "@/lib/contact-security";
+import { readTurnstileToken, verifyTurnstile } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
 
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, email, message, website } = body as Record<string, unknown>;
+  const { name, email, message, website, turnstileToken } = body as Record<string, unknown>;
   if (website !== undefined && typeof website !== "string") {
     return contactError(400, "Invalid request body.");
   }
@@ -88,6 +89,11 @@ export async function POST(req: Request) {
     );
   }
 
+  const token = readTurnstileToken(turnstileToken);
+  if (!token) {
+    return contactError(400, "Please complete the verification check.");
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.RESEND_FROM_EMAIL;
   const toEmail = process.env.EMAIL_TO;
@@ -101,6 +107,11 @@ export async function POST(req: Request) {
       { status: 503 },
     );
   }
+
+  // Verify before any delivery work. Tokens are single-use, so this runs once
+  // the request is otherwise known to be deliverable.
+  const verification = await verifyTurnstile(token, req, process.env.TURNSTILE_SECRET_KEY);
+  if (!verification.ok) return contactError(verification.status, verification.error);
 
   try {
     const { env } = getCloudflareContext();

@@ -1,0 +1,43 @@
+# Jurgen Leka
+
+> Jurgen Leka is a software engineer with six years of shipping web apps, mobile apps and developer tools for teams across Europe and the US, mostly in React, Next.js, Angular and Node.js. He usually ends up owning frontend architecture, large migrations and release days. After hours he builds iOS apps, release tools, local-first software and AI experiments.
+
+This is his personal portfolio at https://jurgenleka.com. The site is a single page with sections for selected work, about, career journey and contact.
+
+## Experience
+
+- Moveo — Lead Frontend Developer (Jan 2024 – present): frontend architecture for a multi-tenant Angular monorepo, NgRx state management, workforce-management workflows and an Ionic app including store releases.
+- Helius — Full Stack Developer / Frontend Migration Lead (Sep 2021 – Mar 2024): led an AngularJS-to-Angular 15 migration, maintained React.js features and Node.js / HapiJS services, built features with Vue.js, Java / Spring Boot and PostgreSQL, mentored interns.
+- Rayonit — Full Stack Developer (Jun 2021 – Aug 2021): traffic management software with real-time data from connected sensors (Angular, Spring Boot, MongoDB).
+- Education: BSc Computer Engineering, Canadian Institute of Technology (2018–2021).
+
+## Key pages
+
+- [Portfolio](https://jurgenleka.com/): selected work, about, journey and contact form
+- [Résumé (PDF)](https://jurgenleka.com/resume.pdf): full CV
+
+## Projects
+
+- [MySigner](https://mysigner.dev): Rails dashboard, API and Ruby CLI that turn mobile app signing and store delivery (TestFlight, Google Play) into one repeatable workflow. Source: https://github.com/jouleka/my-signer
+- [Aichu](https://github.com/jouleka/aichu): Rust local proxy that swaps secret-shaped values in prompts sent by AI coding agents for typed placeholders, then restores them in streamed responses.
+- [Subtitle.fm](https://github.com/jouleka/subtitle-fm): AI-assisted subtitle production platform with waveform timing, glossaries, realtime collaboration, reviews, GPU transcription and a Stremio add-on (SvelteKit, Bun, Python, Yjs).
+- [Reading Companion](https://github.com/jouleka/reading-companion): self-hosted EPUB reader that builds spoiler-safe, chapter-bounded memory of characters, relationships and events (React, FastAPI, SQLite).
+- [Goldengo](https://github.com/jouleka/goldengo): native iOS personal-finance app with local statement parsing, budgets, goals, widgets, App Shortcuts and optional private CloudKit sync (SwiftUI, SwiftData).
+- [OopsFee](https://github.com/jouleka/Oops-fee): cross-platform accountability app for promises with verification, optional stakes and reminders (React Native, Expo, Supabase, Stripe).
+- [OptionsBot](https://github.com/jouleka/optionsbot): paper-only options research, alerting and opt-in execution with deterministic risk gates and a kill switch (Python, IBKR).
+- [Polymarket Bot](https://github.com/jouleka/polymarket-bot): paper-only prediction-market research lab where a separate execution and risk service validates every agent-proposed trade (Python).
+- [Great Wall of Ideas](https://www.greatwallofideas.com): community wall for publishing, discussing and remixing ideas in realtime (Next.js, Supabase). Source: https://github.com/jouleka/great-wall-of-ideas
+- [Resume Builder](https://github.com/jouleka/cv-template): typed, configurable, print-ready resume system (React, TypeScript, Vite).
+- [Chat Application](https://github.com/jouleka/Chat-Application): WhatsApp-inspired Angular realtime chat client with direct and group conversations over STOMP/SockJS.
+
+## Skills
+
+React, Next.js, Angular, Ionic, Node.js, TypeScript, Ruby on Rails, Python, Swift / SwiftUI, Rust, realtime systems, frontend architecture, migrations, testing and release automation.
+
+## Contact
+
+- Email: lekacoding@gmail.com
+- GitHub: https://github.com/jouleka
+- LinkedIn: https://www.linkedin.com/in/jurgen-leka-31470119a/
+- X: https://x.com/jou_leka
+- Instagram: https://www.instagram.com/jou_leka/

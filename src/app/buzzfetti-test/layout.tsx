@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+// Unlisted test pages: kept out of search results and the sitemap.
 export const metadata: Metadata = {
-  title: "Buzzfetti tracking test",
   robots: { index: false, follow: false },
 };
 

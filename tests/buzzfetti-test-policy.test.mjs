@@ -8,11 +8,12 @@ test("production permits the configured Cloudflare beacon with same-origin colle
   const connections = rules.find((rule) => rule.startsWith("connect-src "));
   assert.deepEqual(scripts.split(" "), [
     "script-src", "'self'", "'unsafe-inline'", "https://static.cloudflareinsights.com",
+    "https://challenges.cloudflare.com",
   ]);
   assert.equal(connections, "connect-src 'self'");
   for (const [csp, expected] of [
-    [securityHeaders(true), "script-src 'self' 'unsafe-inline' 'unsafe-eval'"],
-    [securityHeaders(false, true), "script-src 'self' 'unsafe-inline' https://buzzfetti.torotoro.uk"],
+    [securityHeaders(true), "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com"],
+    [securityHeaders(false, true), "script-src 'self' 'unsafe-inline' https://buzzfetti.torotoro.uk https://challenges.cloudflare.com"],
   ]) {
     assert.equal(csp["Content-Security-Policy"].split("; ").find((rule) => rule.startsWith("script-src ")), expected);
   }
@@ -31,4 +32,13 @@ test("the test permits the Buzzfetti script and collector without widening norma
   assert.equal(isBuzzfettiTestPath("/buzzfetti-test-other"), false);
   assert.equal(isBuzzfettiTestPath("/buzzfetti-test"), true);
   assert.equal(isBuzzfettiTestPath("/buzzfetti-test/thanks"), true);
+});
+
+test("every policy permits only the exact Turnstile origin for scripts and frames", () => {
+  for (const headers of [securityHeaders(), securityHeaders(true), securityHeaders(false, true)]) {
+    const rules = headers["Content-Security-Policy"].split("; ");
+    assert.ok(rules.find((rule) => rule.startsWith("script-src ")).split(" ").includes("https://challenges.cloudflare.com"));
+    assert.equal(rules.find((rule) => rule.startsWith("frame-src ")), "frame-src https://challenges.cloudflare.com");
+    assert.ok(!headers["Content-Security-Policy"].includes("*.cloudflare.com"));
+  }
 });

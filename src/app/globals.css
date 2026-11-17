@@ -1757,6 +1757,10 @@ main {
 .letter__reply input {
   font-size: 1.3rem;
 }
+.letter__check {
+  min-height: 65px;
+  margin-top: 14px;
+}
 .letter__foot {
   display: flex;
   flex-wrap: wrap;

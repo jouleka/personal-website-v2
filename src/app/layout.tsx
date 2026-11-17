@@ -2,6 +2,15 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Caveat, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import "lenis/dist/lenis.css";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  SOCIAL_DESCRIPTION,
+  SOCIAL_IMAGE,
+  TWITTER_HANDLE,
+} from "@/lib/site";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -32,15 +41,18 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | Jurgen Leka",
-    default: "Jurgen Leka — Software Engineer & Builder",
+    default: SITE_TITLE,
   },
-  description:
-    "Software engineer with six years of shipping web, mobile and developer tools in React, Next.js, Angular and Swift. Owner of frontend architecture, migrations and release days. Maker of MySigner and too many side projects.",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
   keywords: [
+    "Jurgen Leka",
     "Software Engineer",
     "Full Stack Developer",
+    "Frontend Developer",
     "Angular",
     "React",
     "Next.js",
@@ -53,33 +65,37 @@ export const metadata: Metadata = {
     "Ruby on Rails",
     "Developer Tools",
   ],
-  authors: [{ name: "Jurgen Leka" }],
-  creator: "Jurgen Leka",
-  metadataBase: new URL("https://jurgenleka.com"),
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  // Defaults for any route that does not set its own; pages pass complete
+  // objects through pageMetadata() because nested metadata is not deep-merged.
   openGraph: {
-    images: [
-      {
-        url: "/social-preview.png?v=jl2",
-        width: 1200,
-        height: 630,
-        alt: "Jurgen Leka — Code. Ship. Repeat.",
-      },
-    ],
+    images: [SOCIAL_IMAGE],
     type: "website",
     locale: "en_US",
-    siteName: "Jurgen Leka",
-    title: "Jurgen Leka — Software Engineer & Builder",
-    description:
-      "Six years of turning coffee into web apps, mobile apps and dev tools. Come play with the shipping machine.",
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SOCIAL_DESCRIPTION,
   },
   twitter: {
-    images: ["/social-preview.png?v=jl2"],
+    images: [{ url: SOCIAL_IMAGE.url, alt: SOCIAL_IMAGE.alt }],
     card: "summary_large_image",
-    creator: "@jou_leka",
+    site: TWITTER_HANDLE,
+    creator: TWITTER_HANDLE,
+    title: SITE_TITLE,
+    description: SOCIAL_DESCRIPTION,
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   icons: {
     icon: [

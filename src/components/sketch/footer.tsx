@@ -1,12 +1,6 @@
 import { ArrowUp, ArrowUpRight } from "lucide-react";
+import { socialProfiles } from "@/lib/site";
 import { Underline } from "./ink";
-
-const socials = [
-  { label: "GitHub", href: "https://github.com/jouleka", color: "ink" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/jurgen-leka-31470119a/", color: "sky" },
-  { label: "X", href: "https://x.com/jou_leka", color: "paper" },
-  { label: "Instagram", href: "https://www.instagram.com/jou_leka/", color: "bubble" },
-];
 
 export default function Footer() {
   return (
@@ -19,7 +13,7 @@ export default function Footer() {
             <Underline color="var(--sun)">See you on the internet.</Underline>
           </p>
           <ul className="footer__socials">
-            {socials.map((s, i) => (
+            {socialProfiles.map((s, i) => (
               <li key={s.label} style={{ rotate: `${i % 2 ? 3 : -3}deg` }}>
                 <a className={`sticker sticker--${s.color}`} href={s.href} target="_blank" rel="noreferrer">
                   {s.label} <ArrowUpRight size={14} />
