@@ -93,7 +93,7 @@ export function homeJsonLd() {
             name: project.name,
             description: project.description,
             url: project.url,
-            codeRepository: project.sourceUrl ?? project.url,
+            codeRepository: project.sourceUrl ?? (project.url.startsWith("https://github.com/") ? project.url : undefined),
             genre: project.eyebrow,
             keywords: project.tags.join(", "),
             author: { "@id": PERSON_ID },

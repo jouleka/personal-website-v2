@@ -4,10 +4,11 @@ The source for [jurgenleka.com](https://jurgenleka.com): a playful, hand-drawn p
 
 ## What is showcased
 
+- **Poffli** — a shared drawing board for two with Home Screen widgets
+- **Mothli** — an EPUB reader with an AI companion that follows your bookmark
 - **MySigner** — mobile signing and release automation through a Rails dashboard, API, and Ruby CLI
 - **Aichu** — local secret redaction for prompts sent through AI coding agents
 - **Subtitle.fm** — AI-assisted, realtime collaborative subtitle production
-- **Reading Companion** — a local-first EPUB reader with spoiler-bounded story memory
 - **Goldengo** — a privacy-minded native iOS personal-finance app
 - **OopsFee** — a cross-platform promises, verification, and accountability product
 - **OptionsBot** — paper-only IBKR options research and deterministic execution controls
@@ -16,7 +17,7 @@ The source for [jurgenleka.com](https://jurgenleka.com): a playful, hand-drawn p
 - **Resume Builder** — a typed, configurable, print-ready CV system
 - **Chat Application** — an early Angular realtime group-messaging product
 
-Every project gets a hand-drawn doodle on an index card. The eleven cards form a pile you can drag, throw and flip; an index below brings any project straight to the top.
+Every project gets a hand-drawn doodle on an index card. The cards form a pile you can drag, throw and flip; an index below brings any project straight to the top.
 
 ## Art direction
 

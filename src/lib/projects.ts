@@ -1,8 +1,9 @@
 export type DoodleKey =
+  | "poffli"
   | "mysigner"
   | "aichu"
   | "subtitle"
-  | "reading"
+  | "mothli"
   | "goldengo"
   | "oopsfee"
   | "options"
@@ -27,6 +28,33 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    name: "Poffli",
+    eyebrow: "Couple widgets / Flutter",
+    audience: "For two people who leave each other little notes",
+    description:
+      "A shared drawing board for two. Draw a heart, add a sticker or leave a handwritten note, and your person can see it on their Home Screen widget.",
+    moment:
+      "Draw a sleepy sun and tap Update. They wake up to it on their Home Screen and draw a coffee cup beside it.",
+    tags: ["Flutter", "WidgetKit", "ASP.NET Core", "OpenMLS"],
+    url: "https://poffli.app",
+    doodle: "poffli",
+    color: "bubble",
+  },
+  {
+    name: "Mothli",
+    eyebrow: "EPUB reader / React + FastAPI",
+    audience: "For readers picking up where they left off",
+    description:
+      "An EPUB reader with an AI companion that follows your bookmark. Ask about a character, untangle a relationship or catch up on the story using what you’ve read so far.",
+    moment:
+      "Halfway through a novel, a familiar name turns up. Ask “Where did we meet her?” and Mothli takes you back to the scene.",
+    tags: ["React", "FastAPI", "PostgreSQL", "PWA"],
+    url: "https://mothli.com",
+    sourceUrl: "https://github.com/jouleka/mothli",
+    doodle: "mothli",
+    color: "lilac",
+  },
   {
     name: "MySigner",
     eyebrow: "Mobile delivery / Rails + Ruby",
@@ -66,19 +94,6 @@ export const projects: Project[] = [
     url: "https://github.com/jouleka/subtitle-fm",
     doodle: "subtitle",
     color: "mint",
-  },
-  {
-    name: "Reading Companion",
-    eyebrow: "Local-first reader / React + FastAPI",
-    audience: "For readers returning to complex books",
-    description:
-      "A self-hosted EPUB reader that builds a chapter-bounded memory of characters, relationships, events, highlights, and where you stopped.",
-    moment:
-      "Ask who someone is in chapter 12 and get the useful context—without facts revealed in chapter 13.",
-    tags: ["React", "FastAPI", "SQLite", "PWA"],
-    url: "https://github.com/jouleka/reading-companion",
-    doodle: "reading",
-    color: "sky",
   },
   {
     name: "Goldengo",

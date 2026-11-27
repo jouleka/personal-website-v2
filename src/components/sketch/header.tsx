@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { projects } from "@/lib/projects";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const links = [
-  { href: "#work", label: "Work", note: "11 things" },
+  { href: "#work", label: "Work", note: `${projects.length} things` },
   { href: "#about", label: "About", note: "hi" },
   { href: "#journey", label: "Journey", note: "6 yrs" },
   { href: "#contact", label: "Contact", note: "say hey" },

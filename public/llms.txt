@@ -18,10 +18,11 @@ This is his personal portfolio at https://jurgenleka.com. The site is a single p
 
 ## Projects
 
+- [Poffli](https://poffli.app) lets two people share drawings and handwritten notes through Home Screen widgets.
+- [Mothli](https://mothli.com) is an EPUB reader with an AI companion that remembers the story up to your bookmark. Source: https://github.com/jouleka/mothli
 - [MySigner](https://mysigner.dev): Rails dashboard, API and Ruby CLI that turn mobile app signing and store delivery (TestFlight, Google Play) into one repeatable workflow. Source: https://github.com/jouleka/my-signer
 - [Aichu](https://github.com/jouleka/aichu): Rust local proxy that swaps secret-shaped values in prompts sent by AI coding agents for typed placeholders, then restores them in streamed responses.
 - [Subtitle.fm](https://github.com/jouleka/subtitle-fm): AI-assisted subtitle production platform with waveform timing, glossaries, realtime collaboration, reviews, GPU transcription and a Stremio add-on (SvelteKit, Bun, Python, Yjs).
-- [Reading Companion](https://github.com/jouleka/reading-companion): self-hosted EPUB reader that builds spoiler-safe, chapter-bounded memory of characters, relationships and events (React, FastAPI, SQLite).
 - [Goldengo](https://github.com/jouleka/goldengo): native iOS personal-finance app with local statement parsing, budgets, goals, widgets, App Shortcuts and optional private CloudKit sync (SwiftUI, SwiftData).
 - [OopsFee](https://github.com/jouleka/Oops-fee): cross-platform accountability app for promises with verification, optional stakes and reminders (React Native, Expo, Supabase, Stripe).
 - [OptionsBot](https://github.com/jouleka/optionsbot): paper-only options research, alerting and opt-in execution with deterministic risk gates and a kill switch (Python, IBKR).

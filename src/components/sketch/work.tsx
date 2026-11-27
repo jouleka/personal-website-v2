@@ -97,7 +97,7 @@ export default function Work() {
           <br />I <Highlight color="var(--bubble)">actually shipped.</Highlight>
         </h2>
         <p>
-          Eleven things I couldn&apos;t leave alone. Fling a card off the pile
+          {projects.length} things I couldn&apos;t leave alone. Fling a card off the pile
           to see the next one, or tap it to peek at the back.
         </p>
       </Reveal>
@@ -117,6 +117,7 @@ export default function Work() {
               const p = projects[id];
               const isTop = pos === 0;
               const isFlying = flying?.id === id;
+              const tilt = TILTS[id % TILTS.length];
               const hidden = pos >= VISIBLE && !isFlying;
               return (
                 <motion.div
@@ -130,7 +131,7 @@ export default function Work() {
                       : {
                           x: isTop ? 0 : pos * 7,
                           y: isTop ? 0 : pos * 9,
-                          rotate: isTop ? TILTS[id] * 0.35 : TILTS[id],
+                          rotate: isTop ? tilt * 0.35 : tilt,
                           scale: 1 - pos * 0.035,
                           opacity: hidden ? 0 : 1,
                         }
@@ -202,8 +203,8 @@ export default function Work() {
           <p className="stack__hint" aria-hidden="true">
             {thrown === 0
               ? "← drag & throw it →"
-              : thrown < 11
-                ? `${thrown} card${thrown === 1 ? "" : "s"} thrown. ${11 - Math.min(thrown, 11)} to go.`
+              : thrown < projects.length
+                ? `${thrown} card${thrown === 1 ? "" : "s"} thrown. ${projects.length - thrown} to go.`
                 : "You went through the whole pile. Respect. ✦"}
           </p>
         </div>
