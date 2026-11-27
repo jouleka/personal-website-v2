@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { projects } from "@/lib/projects";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Eyebrow, Reveal, Underline } from "./ink";
@@ -163,7 +164,7 @@ export default function About() {
               <span>years shipping</span>
             </li>
             <li className="fact fact--mint">
-              <strong>11</strong>
+              <strong>{projects.length}</strong>
               <span>things on the pile</span>
             </li>
             <li className="fact fact--bubble">
